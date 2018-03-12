@@ -11,21 +11,25 @@
 
 <!-- The remainder of this file is to be completed by students in milestone 2 -->
 
-<h2>@ViewBag.Title</h2>
-<form method="POST" action="">
-    @ViewBag.message
-    <br />
-    <br />
-    Username:<br />
-    <input type="text" name="username" />
-    <br />
-    <br />
-    Password:<br />
-    <input type="text" name="password" />
-    <br />
-    <br />
-    <input type="submit" name="submitButton" value="Submit" />
-    <br />
-    <p>No account? <a href="">Click Here</a> <!-- Add account creation ink to href--></p>
-    <br />
-</form>
+@using (Html.BeginForm("Submit", "Authentication", FormMethod.Get,
+    new { id = "Form", onsubmit = "return validate()" }))
+{
+    <h2>@ViewBag.Title</h2>
+    <form name="login">
+        @ViewBag.message
+        <br />
+        <br />
+        Username:<br />
+        <input type="text" name="un"/>
+        <br />
+        <br />
+        Password:<br />
+        <input type="text" name="pw"/>
+        <br />
+        <br />
+        <input type="submit" name="submitButton" value="Submit" />
+        <br />
+        <p>No account? <a href="">Click Here</a> <!-- Add account creation ink to href--></p>
+        <br />
+    </form>
+}
