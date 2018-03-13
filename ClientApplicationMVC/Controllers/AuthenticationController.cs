@@ -24,10 +24,15 @@ namespace ClientApplicationMVC.Controllers
             return View("Index");
         }
 
+        public ActionResult Register()
+        {
+            return View("CreateAccount");
+        }
+
         public ActionResult Submit()
         {
-
-            return View("CreateAccount");
+            ViewBag.Message = "You are now logged in.";
+            return View("Index");
         }
 		
 		//This class is incomplete and should be completed by the students in milestone 2
