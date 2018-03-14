@@ -45,15 +45,16 @@ namespace ClientApplicationMVC.Controllers
         {
             return View("CreateAccount");
         }
-        public ActionResult Register()
+        public ActionResult Register(string proposedUsername, string proposedPassword, 
+            string proposedAddress, string proposedPhoneNumber, string proposedEmail, AccountType proposedType)
         {
             CreateAccount newAcc = new CreateAccount();
-            //newAcc.username = username
-            //newAcc.password = password
-            //newAcc.address = address
-            //newAcc.phonenumber = phonenumber
-            //newAcc.email = email
-            //newAcc.type = type
+            newAcc.username = proposedUsername;
+            newAcc.password = proposedPassword;
+            newAcc.address = proposedAddress;
+            newAcc.phonenumber = proposedPhoneNumber;
+            newAcc.email = proposedEmail;
+            newAcc.type = proposedType;
             CreateAccountRequest CAR = new CreateAccountRequest(newAcc);
             ServiceBusResponse response = ConnectionManager.sendNewAccountInfo(CAR);
 
