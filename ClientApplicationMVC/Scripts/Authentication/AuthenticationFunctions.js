@@ -1,17 +1,19 @@
 ﻿// To be completed by students in milestone 2
 
 //This function is the preliminary username/password checker before the username and password are sent to the server to log in.
-function validate()
-{
+function validate() {
     var un = loginForm.un.value;
     var pw = loginForm.pw.value;
-    if (un === "" || pw === "") {
+    if (un.trim() === "" || pw === "" || un.length > 50 || pw.length > 50) {
+        alert("Invalid username or password");
         return false;
     }
-    else if (un.length > 50) {
+    else if (un.match(/^\d/)) {
+        alert("Invalid username: Username cannot start with a number");
         return false;
     }
-    else if (pw.length > 50) {
+    else if (un.match(/[^a-zA-Z0-9]/)) {
+        alert("Invalid username: Username can only be alphanumeric");
         return false;
     }
     return true;
