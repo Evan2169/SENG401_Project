@@ -4,8 +4,8 @@
 function validate() {
     var un = loginForm.un.value;
     var pw = loginForm.pw.value;
-    if (un.trim() === "" || pw === "" || un.length > 50 || pw.length > 50) {
-        alert("Invalid username or password");
+    if (un.trim() === "" || pw === "" || un.length > 15 || pw.length > 15 || un.length < 2 || pw.length < 2) {
+        alert("Invalid username or password: Both must not be empty and between 2 and 15 characters long");
         return false;
     }
     else if (un.match(/^\d/)) {
