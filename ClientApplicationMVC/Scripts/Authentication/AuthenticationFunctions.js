@@ -13,3 +13,8 @@ function validate()
     }
     return true;
 }
+
+function registerUser()
+{
+   // var un = document.getElementById.usernam
+}
