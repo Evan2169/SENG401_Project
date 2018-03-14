@@ -12,25 +12,27 @@
 <!-- The remainder of this file is to be completed by students in milestone 2 -->
 
 @using (Html.BeginForm("Submit", "Authentication", FormMethod.Get,
-    new { id = "Form", onsubmit = "return validate()" }))
+    new { id = "loginForm", onsubmit = "return validate()" }))
 {
     <h2>@ViewBag.Title</h2>
-    <form name="login">
-        @ViewBag.message
-        <br />
-        <br />
-        Username:<br />
-        <input type="text" name="un" id="un"/>
-        <br />
-        <br />
-        Password:<br />
-        <input type="text" name="pw" id="pw" />
-        <br />
-        <br />
-        <input type="submit" name="submitButton" value="Submit" />
-        <br />
-        <p>No account? <a href="http://localhost:60475/Authentication/Register">Click Here</a> <!-- Add account creation ink to href--></p>
-        <br />
-        @ViewBag.response
-    </form>
+
+    @ViewBag.message
+    <br />
+    <br />
+    <p>Username:</p>
+    @Html.TextBox("un")
+    <br />
+    <br />
+    <p>Password:</p>
+    @Html.TextBox("pw")
+    <br />
+    <br />
+    <input type="submit" name="submitButton" value="Submit" />
+    <br />
+    <p>
+        No account? <a href="http://localhost:60475/Authentication/Register">Click Here</a> <!-- Add account creation ink to href-->
+    </p>
+    <br />
+    @ViewBag.response
+
 }
