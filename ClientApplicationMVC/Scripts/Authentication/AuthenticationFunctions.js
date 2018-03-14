@@ -8,6 +8,7 @@ function validate()
     if (un === "" || pw === "") {
         return false;
     }
+ 
     return true;
 }
 
