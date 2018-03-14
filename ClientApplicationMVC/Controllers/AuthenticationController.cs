@@ -41,6 +41,10 @@ namespace ClientApplicationMVC.Controllers
             }
             return View("Index");
         }
+        public ActionResult CreateAccount()
+        {
+            return View("CreateAccount");
+        }
         public ActionResult Register()
         {
             CreateAccount newAcc = new CreateAccount();
@@ -63,7 +67,7 @@ namespace ClientApplicationMVC.Controllers
             }
 
 
-            return View("Index");
+            return View("CreateAccount");
         }
 		//This class is incomplete and should be completed by the students in milestone 2
 		//Hint: You will need to make use of the ServiceBusConnection class. See EchoController.cs for an example.

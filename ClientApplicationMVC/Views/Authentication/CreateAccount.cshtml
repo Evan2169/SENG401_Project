@@ -12,7 +12,7 @@
 <h2>@ViewBag.Title</h2>
 
 
-@using (Html.BeginForm("Submit", "Authentication", FormMethod.Get,
+@using (Html.BeginForm("Register", "Authentication", FormMethod.Get,
     new { id = "registerForm", onsubmit = "return registerUser()" }))
 {
     @ViewBag.message
