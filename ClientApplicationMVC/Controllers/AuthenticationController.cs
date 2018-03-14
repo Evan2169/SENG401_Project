@@ -24,17 +24,26 @@ namespace ClientApplicationMVC.Controllers
             return View("Index");
         }
 
+        public ActionResult Submit(string un, string pw)
+        {
+            LogInRequest loginReq = new LogInRequest(un, pw);
+            ServiceBusConnection connection = new ServiceBusConnection(un);
+            ServiceBusResponse response = connection.sendLogIn(loginReq);
+            if (!response.result)
+            {
+                ViewBag.response = "Login Unsuccessful!\n" + response.response;
+            }
+            else
+            {
+                ViewBag.response = "Successfully logged in!\n";
+            }
+            System.Diagnostics.Debug.Print("MESSAGE:" + response.response);
+            return View("Index");
+        }
         public ActionResult Register()
         {
             return View("CreateAccount");
         }
-
-        public ActionResult Submit()
-        {
-            ViewBag.Message = "You are now logged in.";
-            return View("Index");
-        }
-		
 		//This class is incomplete and should be completed by the students in milestone 2
 		//Hint: You will need to make use of the ServiceBusConnection class. See EchoController.cs for an example.
     }

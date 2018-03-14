@@ -5,10 +5,7 @@ function validate()
 {
     var un = document.login.un.value;
     var pw = document.login.pw.value;
-    if (un === "") {
-        return false;
-    }
-    else if (Form.password.value === "") {
+    if (un === "" || pw === "") {
         return false;
     }
     return true;
