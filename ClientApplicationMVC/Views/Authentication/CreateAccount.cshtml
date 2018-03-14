@@ -12,19 +12,21 @@
 <h2>@ViewBag.Title</h2>
 
 
-<form method="POST" action="">
+@using (Html.BeginForm("Submit", "Authentication", FormMethod.Get,
+    new { id = "registerForm", onsubmit = "return registerUser()" }))
+{
     @ViewBag.message
     <br />
     <br />
-    <p>Username: </p><br />
-    <input type="text" name="username" id="proposedUsername" />
+    <p>Choose a username: </p><br />
+    @Html.TextBox("proposedUsername")
     <br />
     <br />
-    <p>Password: </p><br />
-    <input type="text" name="password" id="proposedPassword" />
+    <p>Choose a password: </p><br />
+    @Html.TextBox("proposedPassword")
     <br />
     <br />
-    <input type="submit" name="submitButton" value="Submit" onclick="registerUser()"/>
+    <input type="submit" name="submitButton" value="Submit" onclick="registerUser()" />
     <br />
     <br />
-</form>
+}
