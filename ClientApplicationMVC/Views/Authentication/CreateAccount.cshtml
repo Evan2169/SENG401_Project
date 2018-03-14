@@ -6,25 +6,25 @@
 <script type="text/javascript" src="~/Scripts/Authentication/AuthenticationFunctions.js"></script>
 
 @{
-    ViewBag.Title = "CreateAccount";
+    ViewBag.Title = "Create Account";
 }
 
 <h2>@ViewBag.Title</h2>
 
-<!-- The remainder of this file is to be completed by students in milestone 2 -->
+
 <form method="POST" action="">
     @ViewBag.message
     <br />
     <br />
-    Username:<br />
+    <p>Username: </p><br />
     <input type="text" name="username" />
     <br />
     <br />
-    Password:<br />
+    <p>Password: </p><br />
     <input type="text" name="password" />
     <br />
     <br />
-    <input type="submit" name="submitButton" value="Submit" />
+    <input type="submit" name="submitButton" value="Submit" onclick="registerUser()"/>
     <br />
     <br />
 </form>

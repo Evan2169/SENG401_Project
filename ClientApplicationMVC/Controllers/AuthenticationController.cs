@@ -37,10 +37,13 @@ namespace ClientApplicationMVC.Controllers
             {
                 ViewBag.response = "Successfully logged in!\n";
             }
-            System.Diagnostics.Debug.Print("MESSAGE:"+response.response);
+            System.Diagnostics.Debug.Print("MESSAGE:" + response.response);
             return View("Index");
         }
-		
+        public ActionResult Register()
+        {
+            return View("CreateAccount");
+        }
 		//This class is incomplete and should be completed by the students in milestone 2
 		//Hint: You will need to make use of the ServiceBusConnection class. See EchoController.cs for an example.
     }
