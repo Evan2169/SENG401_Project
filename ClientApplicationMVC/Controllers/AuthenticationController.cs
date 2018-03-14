@@ -24,10 +24,21 @@ namespace ClientApplicationMVC.Controllers
             return View("Index");
         }
 
-        public ActionResult Submit()
+        public ActionResult Submit(string un, string pw)
         {
-
-            return View("CreateAccount");
+            LogInRequest loginReq = new LogInRequest(un, pw);
+            ServiceBusConnection connection = new ServiceBusConnection(un);
+            ServiceBusResponse response = connection.sendLogIn(loginReq);
+            if (!response.result)
+            {
+                ViewBag.response = "Login Unsuccessful!\n" + response.response;
+            }
+            else
+            {
+                ViewBag.response = "Successfully logged in!\n";
+            }
+            System.Diagnostics.Debug.Print("MESSAGE:"+response.response);
+            return View("Index");
         }
 		
 		//This class is incomplete and should be completed by the students in milestone 2
