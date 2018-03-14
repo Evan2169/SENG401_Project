@@ -21,14 +21,24 @@ function validate() {
 
 function registerUser()
 {
-    var un = registerForm.proposedUsername.value;
-    var pw = registerForm.proposedPassword.value;
-    if (un === "" || pw === "") {
-        alert("You must enter a valid username or password");
-    } else if (un.length < 2 || un.length > 15) {
+    var user = registerForm.proposedUsername.value;
+    var pass = registerForm.proposedPassword.value;
+    var address = registerForm.proposedAddress.value;
+    var phone = registerForm.proposedPhoneNumber.value;
+    var email = registerForm.proposedEmail.value;
+    var type = registerForm.proposedType.value;
+    if (user === "" || pass === "" || address === "" || phone === "" || email === "") {
+        alert("One or more fields are missing!");
+    } else if (user.length < 2 || un.length > 15) {
         alert("Please enter a valid username, between 2 and 15 characters long.");
-    } else if (pw.length < 6 || pw.length > 15) {
+    } else if (pass.length < 6 || pw.length > 15) {
         alert("Please enter a valid password, between 6 and 15 characters long.");
-    }
+    } else if (address.length < 2 || address.length > 25) {
+        alert("Please enter a valid address, between 2 and 25 characters long.");
+    } else if (phone.length < 7 || phone.length > 11) {
+        alert("Please enter a valid phone number, between 7 and 11 digits.");
+    } else if (email.length < 2 || !email.includes("@") || email.length > 25) {
+        alert("Please enter a valid e-mail, between 2 and 25 characters");
+    } 
     //If we get to here, allow the user to register an account in the database.
 }
