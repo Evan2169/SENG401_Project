@@ -19,8 +19,8 @@ function validate()
 
 function registerUser()
 {
-    var un = document.getElementById("proposedUsername");
-    var pw = document.getElementById("proposedPassword");
+    var un = registerForm.proposedUsername.value;
+    var pw = registerForm.proposedPassword.value;
     if (un === "" || pw === "") {
         alert("You must enter a valid username or password");
     } else if (un.length < 2 || un.length > 15) {

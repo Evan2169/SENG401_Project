@@ -12,39 +12,43 @@
 <h2>@ViewBag.Title</h2>
 
 
-<form method="POST" action="">
+@using (Html.BeginForm("Submit", "Authentication", FormMethod.Get,
+    new { id = "registerForm", onsubmit = "return registerUser()" }))
+{
     @ViewBag.message
     <br />
     <br />
-    <p>Username: </p><br />
-    <input type="text" name="username" id="proposedUsername" />
+    <p>Enter a username: </p><br />
+    @Html.TextBox("proposedUsername")
     <br />
     <br />
-    <p>Password: </p><br />
-    <input type="text" name="password" id="proposedPassword" />
+    <p>Enter a password: </p><br />
+    @Html.TextBox("proposedPassword")
     <br />
     <br />
-    <p>Address: </p><br />
-    <input type="text" name="address" id="proposedAddress" />
+    <p>Enter your address: </p><br />
+    @Html.TextBox("proposedAddress")
     <br />
     <br />
-    <p>Phone Number: </p><br />
-    <input type="text" name="phonenumber" id="proposedPhoneNumber" />
+    <p>Enter your phone number: </p><br />
+    @Html.TextBox("proposedPhoneNumber")
     <br />
     <br />
-    <p>Email: </p><br />
-    <input type="text" name="email" id="proposedEmail" />
+    <p>Enter your email: </p><br />
+    @Html.TextBox("proposedEmail")
     <br />
     <br />
-    <p>Type: </p>
-    <input type="radio" name="typegroup" value="user" checked> proposedType<br>
-    <input type="radio" name="typegroup" value="business"> proposedType<br>
-    <input type="radio" name="typegroup" value="notspecified"> proposedType<br>
+    <b>Select User Type: </b><br />
+    <span>User: </span> @Html.RadioButton("proposedType","user",true)
+    <span> | Business: </span> @Html.RadioButton("proposedType", "business",false)
+    <span> | Not Specified: </span> @Html.RadioButton("proposedType", "notspecified", false)
     <br />
-    <input type="submit" name="submitButton" value="Submit" onclick="registerUser()"/>
+    <hr />
+    <br />
+    <br />
+    <input type="submit" name="submitButton" value="Submit" onclick="registerUser()" />
     <br />
     <br />
 
-
-</form>
+}
 
