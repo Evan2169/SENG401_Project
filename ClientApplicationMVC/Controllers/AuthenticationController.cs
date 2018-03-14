@@ -27,8 +27,9 @@ namespace ClientApplicationMVC.Controllers
         public ActionResult Submit(string un, string pw)
         {
             LogInRequest loginReq = new LogInRequest(un, pw);
-            ServiceBusConnection connection = new ServiceBusConnection(un);
-            ServiceBusResponse response = connection.sendLogIn(loginReq);
+            //ServiceBusConnection connection = new ServiceBusConnection(un);
+            //ServiceBusResponse response = connection.sendLogIn(loginReq);
+            ServiceBusResponse response = ConnectionManager.sendLogIn(loginReq);
             if (!response.result)
             {
                 ViewBag.response = "Login Unsuccessful!\n" + response.response;
@@ -42,7 +43,27 @@ namespace ClientApplicationMVC.Controllers
         }
         public ActionResult Register()
         {
-            return View("CreateAccount");
+            CreateAccount newAcc = new CreateAccount();
+            //newAcc.username = username
+            //newAcc.password = password
+            //newAcc.address = address
+            //newAcc.phonenumber = phonenumber
+            //newAcc.email = email
+            //newAcc.type = type
+            CreateAccountRequest CAR = new CreateAccountRequest(newAcc);
+            ServiceBusResponse response = ConnectionManager.sendNewAccountInfo(CAR);
+
+            if (!response.result)
+            {
+                ViewBag.response = "Error in creating account. Login Unsuccessful!\n" + response.response;
+            }
+            else
+            {
+                ViewBag.response = "New account successfully created. Successfully logged in!\n";
+            }
+
+
+            return View("Index");
         }
 		//This class is incomplete and should be completed by the students in milestone 2
 		//Hint: You will need to make use of the ServiceBusConnection class. See EchoController.cs for an example.
