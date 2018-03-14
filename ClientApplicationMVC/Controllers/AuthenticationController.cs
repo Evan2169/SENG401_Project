@@ -26,6 +26,7 @@ namespace ClientApplicationMVC.Controllers
 
         public ActionResult Submit(string un, string pw)
         {
+            System.Diagnostics.Debug.Print("MESSAGE:got here");
             LogInRequest loginReq = new LogInRequest(un, pw);
             ServiceBusConnection connection = new ServiceBusConnection(un);
             ServiceBusResponse response = connection.sendLogIn(loginReq);
@@ -37,7 +38,6 @@ namespace ClientApplicationMVC.Controllers
             {
                 ViewBag.response = "Successfully logged in!\n";
             }
-            System.Diagnostics.Debug.Print("MESSAGE:" + response.response);
             return View("Index");
         }
         public ActionResult Register()
