@@ -39,8 +39,8 @@
     <br />
     <br />
     <b>Select User Type: </b><br />
-    <span>User: </span> @Html.RadioButton("proposedType","user",true)
-    <span> | Business: </span> @Html.RadioButton("proposedType", "business",false)
+    <span>User: </span> @Html.RadioButton("proposedType", "user", true)
+    <span> | Business: </span> @Html.RadioButton("proposedType", "business", false)
     <span> | Not Specified: </span> @Html.RadioButton("proposedType", "notspecified", false)
     <br />
     <hr />
@@ -48,7 +48,8 @@
     <br />
     <input type="submit" name="submitButton" value="Submit" onclick="registerUser()" />
     <br />
+    @ViewBag.createaccountresponse
     <br />
- 
+
 }
 

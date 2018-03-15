@@ -73,13 +73,12 @@ namespace ClientApplicationMVC.Controllers
 
             if (!response.result)
             {
-                ViewBag.response = "Error in creating account. Login Unsuccessful!\n" + response.response;
+                ViewBag.createaccountresponse = "Error in creating account.\n" + response.response;
             }
             else
             {
-                ViewBag.response = "New account successfully created. Successfully logged in!\n";
+                ViewBag.createaccountresponse = "New account successfully created. Successfully logged in!\n";
             }
-
 
             return View("CreateAccount");
         }
