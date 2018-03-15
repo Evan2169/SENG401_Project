@@ -12,6 +12,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
+using Messages.ServiceBusRequest.CompanyDirectory.Requests;
+using Messages.ServiceBusRequest.CompanyDirectory.Responses;
 
 namespace ClientApplicationMVC.Models
 {
@@ -53,10 +55,15 @@ namespace ClientApplicationMVC.Models
             return readUntilEOF();
         }
 
+        internal CompanySearchResponse searchCompanyByName(CompanySearchRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
 
         #endregion AuthenticationServiceMessages
 
-       
+
         #region EchoServiceMessages
 
 
@@ -80,6 +87,11 @@ namespace ClientApplicationMVC.Models
         {
             send(request);
             return readUntilEOF();
+        }
+
+        internal GetCompanyInfoResponse getCompanyInfo(GetCompanyInfoRequest infoRequest)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion EchoServiceMessages
