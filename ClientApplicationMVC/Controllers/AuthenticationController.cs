@@ -20,16 +20,28 @@ namespace ClientApplicationMVC.Controllers
         /// <returns>The login page</returns>
         public ActionResult Index()
         {
-            ViewBag.Message = "Please enter your username and password.";
+            if (Globals.isLoggedIn() == false)
+            {
+                ViewBag.Message = "Please enter your username and password.";
+                return View("Index");
+            }
+            else
+            {
+                return View("LoggedIn");
+            }
+        }
+
+        public ActionResult LogOut()
+        {
+            ConnectionManager.getConnectionObject(Globals.getUser()).close();
+            Globals.setUser("Log In");
             return View("Index");
         }
 
         public ActionResult Submit(string un, string pw)
-        {
-            System.Diagnostics.Debug.Print("MESSAGE:got here");
+        {           
             LogInRequest loginReq = new LogInRequest(un, pw);
-            //ServiceBusConnection connection = new ServiceBusConnection(un);
-            //ServiceBusResponse response = connection.sendLogIn(loginReq);
+            
             ServiceBusResponse response = ConnectionManager.sendLogIn(loginReq);
             if (!response.result)
             {
@@ -38,6 +50,7 @@ namespace ClientApplicationMVC.Controllers
             else
             {
                 ViewBag.response = "Successfully logged in!\n";
+                return View("LoggedIn");
             }
             return View("Index");
         }
