@@ -78,6 +78,7 @@ namespace ClientApplicationMVC.Controllers
             else
             {
                 ViewBag.createaccountresponse = "New account successfully created. Successfully logged in!\n";
+                return View("LoggedIn");
             }
 
             return View("CreateAccount");

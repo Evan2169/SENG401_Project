@@ -19,6 +19,7 @@ function validate() {
     return true;
 }
 
+//This is the preliminary error checker for creating a new account
 function registerUser()
 {
     var user = registerForm.proposedUsername.value;
@@ -47,4 +48,5 @@ function registerUser()
         return false;
     } 
     //If we get to here, allow the user to register an account in the database.
+    return true;
 }
