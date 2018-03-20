@@ -1,12 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Messages.DataTypes.Database.CompanyDirectory
 {
-    public class CompanyList
+    /// <summary>
+    /// Contains a list of company names
+    /// </summary>
+    [Serializable]
+    public partial class CompanyList
     {
+        /// <summary>
+        /// A list of the company names
+        /// </summary>
+        public string[] companyNames { get; set; }
     }
 }

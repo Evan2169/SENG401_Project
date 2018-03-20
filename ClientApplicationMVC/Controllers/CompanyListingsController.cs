@@ -1,12 +1,8 @@
 ﻿using ClientApplicationMVC.Models;
 
 using Messages.DataTypes.Database.CompanyDirectory;
-using Messages.DataTypes.Database.CompanyReview;
-using Messages.ServiceBusRequest;
 using Messages.ServiceBusRequest.CompanyDirectory.Responses;
 using Messages.ServiceBusRequest.CompanyDirectory.Requests;
-using Messages.ServiceBusRequest.CompanyReview.Requests;
-using Messages.ServiceBusRequest.CompanyReview.Responses;
 
 using System;
 using System.Web.Mvc;
