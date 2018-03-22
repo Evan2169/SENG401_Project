@@ -7,13 +7,12 @@ using NServiceBus.Logging;
 
 using System.Threading.Tasks;
 
-namespace EchoService.Handlers
+namespace CompanyListingsService.Handlers
 {
     /// <summary>
-    /// This is the handler class for the reverse echo. 
-    /// This class is created and its methods called by the NServiceBus framework
+    /// This is the handler class for a company listings event.
     /// </summary>
-    public class EchoEventHandler : IHandleMessages<AsIsEchoEvent>
+    public class CompanyListingsEventHandler : IHandleMessages<CompanyListingsEvent>
     {
         /// <summary>
         /// This is a class provided by NServiceBus. Its main purpose is to be use log.Info() instead of Messages.Debug.consoleMsg().
@@ -24,15 +23,15 @@ namespace EchoService.Handlers
         static ILog log = LogManager.GetLogger<AsIsEchoEvent>();
 
         /// <summary>
-        /// Saves the echo to the database
-        /// This method will be called by the NServiceBus framework when an event of type "AsIsEchoEvent" is published.
+        /// Handles company events
+        /// This method will be called by the NServiceBus framework when an event of type "CompanyListingsEvent" is published.
         /// </summary>
-        /// <param name="message">Information about the echo</param>
+        /// <param name="message">Information about the company</param>
         /// <param name="context"></param>
         /// <returns>Nothing</returns>
-        public Task Handle(AsIsEchoEvent message, IMessageHandlerContext context)
+        public Task Handle(CompanyListingsEvent message, IMessageHandlerContext context)
         {
-            EchoServiceDatabase.getInstance().saveAsIsEcho(message);
+            //TODO: Finish this class
             return Task.CompletedTask;
         }
     }
