@@ -11,38 +11,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Messages.ServiceBusRequest.CompanyDirectory.Responses;
 
 namespace CompanyListingsService.Database
 {
     /// <summary>
     /// This portion of the class contains methods and functions
     /// </summary>
-    public partial class EchoServiceDatabase : AbstractDatabase
+    public partial class CompanyListingsDatabase : AbstractDatabase
     {
         /// <summary>
         /// Private default constructor to enforce the use of the singleton design pattern
         /// </summary>
-        private EchoServiceDatabase() { }
+        private CompanyListingsDatabase() { }
 
         /// <summary>
         /// Gets the singleton instance of the database
         /// </summary>
         /// <returns>The singleton instance of the database</returns>
-        public static EchoServiceDatabase getInstance()
+        public static CompanyListingsDatabase getInstance()
         {
             if (instance == null)
             {
-                instance = new EchoServiceDatabase();
+                instance = new CompanyListingsDatabase();
             }
             return instance;
         }
 
         /// <summary>
-        /// Saves the foreward echo to the database
+        /// Saves the company info to the database
         /// </summary>
-        /// <param name="echo">Information about the echo</param>
-        public void saveAsIsEcho(AsIsEchoEvent echo)
+        /// <param name="compo">Information about the company</param>
+        //TODO: Create company saving functionality
+        public void saveCompany(CompanyListingsEvent compo)
         {
+        /*
             if(openConnection() == true)
             {
                 string query = @"INSERT INTO echoforward(timestamp, username, datain)" +
@@ -58,36 +61,34 @@ namespace CompanyListingsService.Database
             {
                 Debug.consoleMsg("Unable to connect to database");
             }
+        */
         }
 
-        /// <summary>
-        /// Saves the reverse echo to the database
-        /// </summary>
-        /// <param name="echo">Information about the echo</param>
-        public void saveReverseEcho(ReverseEchoRequest request)
+        ///<summary>
+        ///Retrieves company info based on company name
+        ///</summary>
+        ///<param name="compo">Information about the company</param>
+        //TODO: Create company retreiving functionality
+        public GetCompanyInfoResponse getCompanyInfo(CompanyListingsEvent compo)
         {
-            if (openConnection() == true)
-            {
-                string query = @"INSERT INTO echoreverse(timestamp, username, datain)" +
-                    @"VALUES('" + DateTimeOffset.Now.ToUnixTimeSeconds().ToString() +
-                    @"', '" + request.username + @"', '" + request.data + @"');";
+            
+        }
 
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.ExecuteNonQuery();
+        ///<summary>
+        ///Searches for companies
+        ///</summary>
+        ///<param name="compo">Information about what to search for</param>
+        //TODO: Create company retreiving functionality
+        public CompanySearchResponse searchCompany(CompanyListingsEvent compo)
+        {
 
-                closeConnection();
-            }
-            else
-            {
-                Debug.consoleMsg("Unable to connect to database");
-            }
         }
     }
 
     /// <summary>
     /// This portion of the class contains the properties and variables 
     /// </summary>
-    public partial class EchoServiceDatabase : AbstractDatabase
+    public partial class CompanyListingsDatabase : AbstractDatabase
     {
         /// <summary>
         /// The name of the database.
@@ -100,7 +101,7 @@ namespace CompanyListingsService.Database
         /// <summary>
         /// The singleton isntance of the database
         /// </summary>
-        protected static EchoServiceDatabase instance = null;
+        protected static CompanyListingsDatabase instance = null;
 
         /// <summary>
         /// This property represents the database schema, and will be used by the base class
