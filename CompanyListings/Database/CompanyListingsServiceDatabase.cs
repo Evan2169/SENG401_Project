@@ -13,6 +13,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Messages.ServiceBusRequest.CompanyDirectory.Responses;
+using Messages.ServiceBusRequest;
+using Messages.DataTypes.Database.CompanyDirectory;
 
 namespace CompanyListingsService.Database
 {
@@ -103,16 +105,27 @@ namespace CompanyListingsService.Database
             if (openConnection() == true)
             {
                 string query = @"SELECT companyName FROM companyListings" +
-                    @"WHERE companyName LIKE " + compo.company.companyName;
+                    @"WHERE companyName LIKE " + compo.searchDeliminator + ";";
+
+                string message = "";
 
                 MySqlCommand command = new MySqlCommand(query, connection);
-                command.ExecuteNonQuery();
+                MySqlDataReader dataReader = command.ExecuteReader();
+                CompanyList results = new CompanyList();
+                results.companyNames = new String[1000];
+                for (int i = 0; dataReader.Read() == true; i++)
+                {
+                    results.companyNames[i] = dataReader.GetString("companyName");
+                }
+                dataReader.Close();
 
                 closeConnection();
+                return new CompanySearchResponse(true, message, results);
             }
             else
             {
                 Debug.consoleMsg("Unable to connect to database");
+                return null;
             }
         }
     }
