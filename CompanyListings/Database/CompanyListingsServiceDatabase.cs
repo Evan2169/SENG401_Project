@@ -81,7 +81,20 @@ namespace CompanyListingsService.Database
         //TODO: Create company retreiving functionality
         public CompanySearchResponse searchCompany(CompanyListingsEvent compo)
         {
+            if (openConnection() == true)
+            {
+                string query = @"SELECT companyName FROM companyListings" +
+                    @"WHERE companyName LIKE " + compo.company.companyName;
 
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.ExecuteNonQuery();
+
+                closeConnection();
+            }
+            else
+            {
+                Debug.consoleMsg("Unable to connect to database");
+            }
         }
     }
 

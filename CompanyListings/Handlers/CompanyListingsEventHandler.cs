@@ -31,7 +31,6 @@ namespace CompanyListingsService.Handlers
         /// <returns>Nothing</returns>
         public Task Handle(CompanyListingsEvent message, IMessageHandlerContext context)
         {
-            //TODO: Finish this class
             CompanyListingsDatabase.getInstance().saveCompany(message);
             return Task.CompletedTask;
         }

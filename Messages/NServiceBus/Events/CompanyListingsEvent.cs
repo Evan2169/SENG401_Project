@@ -11,6 +11,5 @@ namespace Messages.NServiceBus.Events
     public class CompanyListingsEvent : IEvent
     {
         public CompanyInstance company { get; set; }
-        //TODO: Add other attributes to this class.
     }
 }
