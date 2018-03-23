@@ -69,9 +69,11 @@ namespace CompanyListingsService.Database
         ///</summary>
         ///<param name="compo">Information about the company</param>
         //TODO: Create company retreiving functionality
-        public GetCompanyInfoResponse getCompanyInfo(CompanyListingsEvent compo)
+        public GetCompanyInfoResponse getCompanyInfo(GetCompanyInfoRequest compo)
         {
-            
+            string query = @"SELECT * FROM " + databaseName + @".Companies " +
+                @"WHERE username='" + username + @"' " +
+                @"AND password='" + password + @"';";
         }
 
         ///<summary>
@@ -79,7 +81,7 @@ namespace CompanyListingsService.Database
         ///</summary>
         ///<param name="compo">Information about what to search for</param>
         //TODO: Create company retreiving functionality
-        public CompanySearchResponse searchCompany(CompanyListingsEvent compo)
+        public CompanySearchResponse searchCompany(CompanySearchRequest compo)
         {
 
         }
@@ -117,73 +119,33 @@ namespace CompanyListingsService.Database
                 {
                     new Column
                     (
-                        "id", "INT(64)",
+                        "companyName", "VARCHAR(15)",
                         new string[]
                         {
                             "NOT NULL",
-                            "UNIQUE",
-                            "AUTO_INCREMENT"
+                            "UNIQUE"
                         }, true
                     ),
-                    new Column
+                     new Column
                     (
-                        "timestamp", "INT(32)",
-                        new string[]
+                        "email", "VARCHAR(100)",
+                        new string[] 
                         {
-                            "NOT NULL",
-                        }, false
-                    ),
-                    new Column
-                    (
-                        "username", "VARCHAR(50)",
-                        new string[] {},
+                            "NOT NULL"
+                        },
                         false
                     ),
                     new Column
                     (
-                        "datain", "VARCHAR(" + SharedData.MAX_MESSAGE_LENGTH.ToString() + ")",
+                        "phoneNumber", "VARCHAR(10)",
                         new string[]
                         {
                             "NOT NULL"
                         }, false
                     ),
-                }
-            ),
-            new Table
-            (
-                dbname,
-                "echoreverse",
-                new Column[]
-                {
                     new Column
                     (
-                        "id", "INT(64)",
-                        new string[]
-                        {
-                            "NOT NULL",
-                            "UNIQUE",
-                            "AUTO_INCREMENT"
-                        }, true
-                    ),
-                    new Column
-                    (
-                        "timestamp", "INT(32)",
-                        new string[]
-                        {
-                            "NOT NULL",
-                        }, false
-                    ),
-                    new Column
-                    (
-                        "username", "VARCHAR(50)",
-                        new string[] 
-                        {
-                            "NOT NULL"
-                        }, false
-                    ),
-                    new Column
-                    (
-                        "datain", "VARCHAR(" + SharedData.MAX_MESSAGE_LENGTH.ToString() + ")",
+                        "location", "VARCHAR(50)",
                         new string[]
                         {
                             "NOT NULL"

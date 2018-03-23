@@ -34,7 +34,8 @@ namespace EchoService.Handlers
         /// <returns>The response to be sent back to the calling process</returns>
         public Task Handle(GetCompanyInfoRequest message, IMessageHandlerContext context)
         {
-            //TODO: Finish this function
+            //TODO: May need to edit.
+            return context.Reply(CompanyListingsDatabase.getInstance().getCompanyInfo(message));
         }
     }
 }
