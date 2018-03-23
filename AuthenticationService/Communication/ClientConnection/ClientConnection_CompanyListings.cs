@@ -32,12 +32,12 @@ namespace AuthenticationService.Communication
 
         private ServiceBusResponse companySearch(CompanySearchRequest searchRequest)
         {
-
+            return null;
         }
 
         private ServiceBusResponse infoSearch(GetCompanyInfoRequest infoRequest)
         {
-
+            return null;
         }
     }
 }

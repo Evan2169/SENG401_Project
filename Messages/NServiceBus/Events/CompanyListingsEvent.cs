@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NServiceBus;
+using Messages.DataTypes.Database.CompanyDirectory;
 
 namespace Messages.NServiceBus.Events
 {
     public class CompanyListingsEvent : IEvent
     {
-        public string comp { get; set; }
-        //TODO: Add other attributes to this class.
+        public CompanyInstance company { get; set; }
     }
 }
