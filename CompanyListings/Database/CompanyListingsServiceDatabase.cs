@@ -3,6 +3,7 @@ using Messages.Database;
 using Messages.DataTypes;
 using Messages.NServiceBus.Events;
 using Messages.ServiceBusRequest.CompanyDirectory.Requests;
+using Messages.DataTypes.Database.CompanyDirectory;
 
 using MySql.Data.MySqlClient;
 
@@ -72,8 +73,24 @@ namespace CompanyListingsService.Database
         public GetCompanyInfoResponse getCompanyInfo(GetCompanyInfoRequest compo)
         {
             string query = @"SELECT * FROM " + databaseName + @".Companies " +
-                @"WHERE username='" + username + @"' " +
-                @"AND password='" + password + @"';";
+                @"WHERE companyName='" + compo.companyInfo.companyName + @"';";
+
+            MySqlCommand command = new MySqlCommand(query, connection);
+            MySqlDataReader dataReader = command.ExecuteReader();
+
+            if(dataReader.Read())
+            {
+                string[] loc = new string [1];
+                loc[0] = dataReader.GetString("location");
+                CompanyInstance toReturn = new CompanyInstance(dataReader.GetString("companyName"), dataReader.GetString("phoneNumber"), dataReader.GetString("email"), loc);
+                dataReader.Close();
+                return new GetCompanyInfoResponse(true, "Successfully retrieved company information.", toReturn);
+            }
+            else
+            {
+                dataReader.Close();
+                return new GetCompanyInfoResponse(false, "Could not find any company information.", null);
+            }
         }
 
         ///<summary>
