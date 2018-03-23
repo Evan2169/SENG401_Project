@@ -3,6 +3,7 @@ using Messages.DataTypes;
 using Messages.ServiceBusRequest;
 using Messages.ServiceBusRequest.Authentication;
 using Messages.ServiceBusRequest.Echo;
+using Messages.ServiceBusRequest.CompanyDirectory;
 
 using NServiceBus;
 
@@ -75,6 +76,7 @@ namespace AuthenticationService.Communication
         /// </summary>
         /// <param name="requestParameters">Information about the request</param>
         /// <returns>A string representing the result of the request</returns>
+        //TODO: May need to fix this method.
         private ServiceBusResponse executeRequest(ServiceBusRequest request)
         {
             switch (request.serviceRequested)
@@ -83,6 +85,8 @@ namespace AuthenticationService.Communication
                     return authenticationRequest((AuthenticationServiceRequest)request);
                 case (Service.Echo):
                     return echoRequest((EchoServiceRequest)request);
+                case (Service.CompanyDirectory):
+                    return companyListingsRequest((CompanyDirectoryServiceRequest)request);
                 default:
                     return new ServiceBusResponse(false, "Error: Invalid request. Did not specify a valid service type. Specified type was: " + request.serviceRequested.ToString());
             }
