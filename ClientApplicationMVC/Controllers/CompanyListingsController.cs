@@ -89,12 +89,21 @@ namespace ClientApplicationMVC.Controllers
             GetCompanyInfoResponse infoResponse = connection.getCompanyInfo(infoRequest);
             ViewBag.CompanyInfo = infoResponse.companyInfo;
 
+            string result = "No company reviews found";
             if (infoResponse.result)
             {
-                HttpClient getRevs = new HttpClient();
-                string uri = "http://localhost:50151/DBLS/GetCompanyReviews/%7B%22companyName%22:%22" + infoResponse.companyInfo.companyName + "%22%7D";
-                string result = getRevs.GetStringAsync(uri).Result;
-                System.Diagnostics.Debug.WriteLine(result);
+                try
+                {
+                    HttpClient getRevs = new HttpClient();
+                    string uri = "http://localhost:50151/DBLS/GetCompanyReviews/%7B%22companyName%22:%22" + infoResponse.companyInfo.companyName + "%22%7D";
+                    result = getRevs.GetStringAsync(uri).Result;
+                    System.Diagnostics.Debug.WriteLine(result);
+                    ViewBag.Review = result;
+                }
+                catch(Exception a)
+                {
+                    result = "Issue communicating with review system.";
+                }
             }
 
             //TODO: Finish
