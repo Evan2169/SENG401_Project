@@ -7,6 +7,7 @@ using Messages.ServiceBusRequest.CompanyDirectory.Requests;
 using System;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Net.Http;
 
 namespace ClientApplicationMVC.Controllers
 {
@@ -87,6 +88,20 @@ namespace ClientApplicationMVC.Controllers
             GetCompanyInfoRequest infoRequest = new GetCompanyInfoRequest(new CompanyInstance(id));
             GetCompanyInfoResponse infoResponse = connection.getCompanyInfo(infoRequest);
             ViewBag.CompanyInfo = infoResponse.companyInfo;
+
+            if (infoResponse.result)
+            {
+                HttpClient getRevs = new HttpClient();
+                string uri = "http://localhost:50151/DBLS/GetCompanyReviews/%7B%22companyName%22:%22" + infoResponse.companyInfo.companyName + "%22%7D";
+                string result = getRevs.GetStringAsync(uri).Result;
+                System.Diagnostics.Debug.WriteLine(result);
+            }
+
+            //TODO: Finish
+            //HttpClient comReview = new HttpClient();
+            //StringContent cont = new StringContent("");
+            //cont.
+            //comReview.PostAsync("http://localhost:50151/DBLS/SaveCompanyReview/", cont);
 
             return View("DisplayCompany");
         }
