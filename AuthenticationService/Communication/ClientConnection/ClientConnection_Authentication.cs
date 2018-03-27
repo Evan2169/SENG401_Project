@@ -60,10 +60,13 @@ namespace AuthenticationService.Communication
 
                 //Publish company event for company to be saved in DB
                 //TODO: May need to fix.
-                string[] loc = new string[1];
-                loc[0] = request.createCommand.address;
-                CompanyListingsEvent comp = new CompanyListingsEvent(new CompanyInstance(request.createCommand.username, request.createCommand.phonenumber, request.createCommand.email, loc));
-                eventPublishingEndpoint.Publish(comp);
+                if (request.createCommand.type == Messages.DataTypes.AccountType.business)
+                {
+                    string[] loc = new string[1];
+                    loc[0] = request.createCommand.address;
+                    CompanyListingsEvent comp = new CompanyListingsEvent(new CompanyInstance(request.createCommand.username, request.createCommand.phonenumber, request.createCommand.email, loc));
+                    eventPublishingEndpoint.Publish(comp);
+                }
             }
             return dbResponse;
         }
