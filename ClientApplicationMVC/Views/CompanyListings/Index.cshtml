@@ -7,24 +7,25 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Search for companies by name</h2>
 
-@using (Html.BeginForm("Search", "CompanyListings"))
+@using (Html.BeginForm("Search", "CompanyListings", FormMethod.Get,
+    new { id = "searchForm", onsubmit = "return validateSearchEntry()" }))
 {
+    <h2>Search for companies by name</h2>
+
     <p>@ViewBag.Message</p>
     <br />
 
-    @Html.TextBox("textCompanyName")
-    <input type="submit" value="Search" onclick="searchCompany()"/>
+    @Html.TextBox("textCompanyName", "", new {required = "TRUE", pattern = "[a - zA - Z0 - 9]{2,15}", title = "Search entry must be 2-15 alphanumeric characters"})
+    <input type="submit" name="searchButton" value="Search"/>
     <br /><br /><br />
 
-    
 }
 @if (ViewBag.Companylist != null)
 {
     if (ViewBag.Companylist.companyNames.Length == 0)
     {
-        <p>Your search did not retrun any results. Please try again.</p>
+        <p>Your search did not return any results. Please try again.</p>
     }
     else
     {
@@ -32,7 +33,7 @@
         foreach (string item in ViewBag.Companylist.companyNames)
         {
             @Html.ActionLink(item, "DisplayCompany/" + item, "CompanyListings")
-            <br/>
+            <br />
         }
     }
 }

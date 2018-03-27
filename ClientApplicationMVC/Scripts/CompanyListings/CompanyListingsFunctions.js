@@ -34,3 +34,17 @@ function validateAndSendMessage() {
         }
     });
 }
+
+//This function is the preliminary search entry checker
+function validateSearchEntry() {
+    var entry = searchForm.textCompanyName.value;
+    if (entry.trim() === "" || entry.length > 15 || entry.length < 2) {
+        alert("Invalid search: search term must be 2-15 chars");
+        return false;
+    }
+    else if (entry.match(/[^a-zA-Z0-9]/)) {
+        alert("Invalid search: company name can only be alphanumeric");
+        return false;
+    }
+    return true;
+}
