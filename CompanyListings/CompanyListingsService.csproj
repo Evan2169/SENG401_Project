@@ -47,8 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\CompanyListingsServiceDatabase.cs" />
-    <Compile Include="Handlers\SearchHandler.cs" />
+    <Compile Include="Handlers\CompanyListingsEventHandler.cs" />
     <Compile Include="Handlers\InfoHandler.cs" />
+    <Compile Include="Handlers\SearchHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

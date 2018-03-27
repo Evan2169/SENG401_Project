@@ -58,6 +58,7 @@
     <Compile Include="NServiceBus\Events\AccountCreated.cs" />
     <Compile Include="NServiceBus\Events\AsIsEchoEvent.cs" />
     <Compile Include="NServiceBus\Events\ClientLogInAttempted.cs" />
+    <Compile Include="NServiceBus\Events\CompanyListingsEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBusRequest\Authentication\AuthenticationServiceRequest.cs" />
     <Compile Include="ServiceBusRequest\Authentication\Requests\CreateAccountRequest.cs" />
