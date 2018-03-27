@@ -6,11 +6,8 @@
 
 <br />
 <p>Email: @ViewBag.CompanyInfo.email</p>
-<br />
 <p>Phone Number: @ViewBag.CompanyInfo.phoneNumber</p>
-<br />
 <p>@ViewBag.CompanyName can be found at these locations:</p>
-<br />
 @foreach (string location in ViewBag.CompanyInfo.locations)
 {
     <p style="padding-left:4em;">@location</p>
@@ -20,10 +17,28 @@
 <div style="height:100px">
     <h4>Start a conversation with @ViewBag.CompanyName</h4>
     <div style="width:400px; float:left">
-        <textarea class="messagetextarea" id="textUserMessage" placeholder="Enter your message here." rows="3"></textarea>
+        <textarea class="messagetextarea" id="textUserMessage" placeholder="Enter your message here." rows="2" cols="25"></textarea>
     </div>
     <div style="float:left">
         <button class="sendbutton" id="SendMessageButton">Send</button>
     </div>
 </div>
+<br />
+
+<div style="height:100px">
+    <h4>Write a Review for @ViewBag.CompanyName</h4>
+    <div style="width:400px; float:left">
+        <textarea class="messagetextarea" id="textUserMessage" placeholder="Enter your review here." rows="3" cols="35"></textarea>
+    </div>
+    <div style="float:left">
+        <button class="savebutton" id="SaveReviewButton">Save</button>
+    </div>
+</div>
 <br /><br />
+
+
+<div style="height:75px">
+    <h4>@ViewBag.CompanyName's Reviews:</h4>
+</div>
+
+
