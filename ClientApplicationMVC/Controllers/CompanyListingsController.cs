@@ -49,7 +49,7 @@ namespace ClientApplicationMVC.Controllers
 
             CompanySearchRequest request = new CompanySearchRequest(textCompanyName);
 
-            CompanySearchResponse response = connection.searchCompanyByName(request);
+            CompanySearchResponse response = connection.getCompanies(request);
             if (response.result == false)
             {
                 return RedirectToAction("Index", "Authentication");

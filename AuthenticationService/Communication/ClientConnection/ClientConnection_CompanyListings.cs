@@ -9,6 +9,7 @@ using Messages.NServiceBus.Events;
 using Messages.ServiceBusRequest;
 using Messages.ServiceBusRequest.CompanyDirectory;
 using Messages.ServiceBusRequest.CompanyDirectory.Requests;
+using NServiceBus;
 
 namespace AuthenticationService.Communication
 {
@@ -32,12 +33,16 @@ namespace AuthenticationService.Communication
 
         private ServiceBusResponse companySearch(CompanySearchRequest searchRequest)
         {
-            return null;
+            SendOptions sendOptions = new SendOptions();
+            sendOptions.SetDestination("CompanyListings");
+            return requestingEndpoint.Request<ServiceBusResponse>(searchRequest, sendOptions).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         private ServiceBusResponse infoSearch(GetCompanyInfoRequest infoRequest)
         {
-            return null;
+            SendOptions sendOptions = new SendOptions();
+            sendOptions.SetDestination("CompanyListings");
+            return requestingEndpoint.Request<ServiceBusResponse>(infoRequest, sendOptions).ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }
 }

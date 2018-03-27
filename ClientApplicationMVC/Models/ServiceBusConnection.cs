@@ -55,12 +55,6 @@ namespace ClientApplicationMVC.Models
             return readUntilEOF();
         }
 
-        internal CompanySearchResponse searchCompanyByName(CompanySearchRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
-
         #endregion AuthenticationServiceMessages
 
 
@@ -89,9 +83,16 @@ namespace ClientApplicationMVC.Models
             return readUntilEOF();
         }
 
-        internal GetCompanyInfoResponse getCompanyInfo(GetCompanyInfoRequest infoRequest)
+        public GetCompanyInfoResponse getCompanyInfo(GetCompanyInfoRequest infoRequest)
         {
-            throw new NotImplementedException();
+            send(infoRequest);
+            return (GetCompanyInfoResponse)readUntilEOF();
+        }
+
+        public CompanySearchResponse getCompanies(CompanySearchRequest compRequest)
+        {
+            send(compRequest);
+            return (CompanySearchResponse)readUntilEOF();
         }
 
         #endregion EchoServiceMessages

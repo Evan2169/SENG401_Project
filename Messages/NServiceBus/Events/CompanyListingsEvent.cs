@@ -10,6 +10,11 @@ namespace Messages.NServiceBus.Events
 {
     public class CompanyListingsEvent : IEvent
     {
+        public CompanyListingsEvent(CompanyInstance comp)
+        {
+            company = comp;
+        }
+
         public CompanyInstance company { get; set; }
     }
 }

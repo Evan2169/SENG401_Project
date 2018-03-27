@@ -1,6 +1,5 @@
 ﻿using Messages;
 using Messages.Database;
-using Messages.DataTypes;
 using Messages.NServiceBus.Events;
 using Messages.ServiceBusRequest.CompanyDirectory.Requests;
 using Messages.DataTypes.Database.CompanyDirectory;
@@ -8,13 +7,8 @@ using Messages.DataTypes.Database.CompanyDirectory;
 using MySql.Data.MySqlClient;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Messages.ServiceBusRequest.CompanyDirectory.Responses;
-using Messages.ServiceBusRequest;
-using Messages.DataTypes.Database.CompanyDirectory;
+using System.Collections;
 
 namespace CompanyListingsService.Database
 {
@@ -45,15 +39,15 @@ namespace CompanyListingsService.Database
         /// Saves the company info to the database
         /// </summary>
         /// <param name="compo">Information about the company</param>
-        //TODO: Create company saving functionality
+        //TODO: May need to fix
         public void saveCompany(CompanyListingsEvent compo)
         {
-        /*
-            if(openConnection() == true)
+            if(openConnection())
             {
-                string query = @"INSERT INTO echoforward(timestamp, username, datain)" +
-                    @"VALUES('" + DateTimeOffset.Now.ToUnixTimeSeconds().ToString() +
-                    @"', '" + echo.username + @"', '" + echo.data + @"');";
+                string query = @"INSERT INTO " + databaseName + @".Companies " +
+                    @"VALUES('" + compo.company.companyName +
+                    @"', '" + compo.company.email + @"', '" + compo.company.phoneNumber
+                    + @"', '" + compo.company.locations[0] + @"');";    //Assumes array of length one (only oone location)
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 command.ExecuteNonQuery();
@@ -64,33 +58,41 @@ namespace CompanyListingsService.Database
             {
                 Debug.consoleMsg("Unable to connect to database");
             }
-        */
+        
         }
 
         ///<summary>
         ///Retrieves company info based on company name
         ///</summary>
         ///<param name="compo">Information about the company</param>
-        //TODO: Create company retreiving functionality
+        //TODO: May need to fix
         public GetCompanyInfoResponse getCompanyInfo(GetCompanyInfoRequest compo)
         {
-            string query = @"SELECT * FROM " + databaseName + @".Companies " +
-                @"WHERE companyName='" + compo.companyInfo.companyName + @"';";
-
-            MySqlCommand command = new MySqlCommand(query, connection);
-            MySqlDataReader dataReader = command.ExecuteReader();
-
-            if(dataReader.Read())
+            if (openConnection())
             {
-                string[] loc = new string [1];
-                loc[0] = dataReader.GetString("location");
-                CompanyInstance toReturn = new CompanyInstance(dataReader.GetString("companyName"), dataReader.GetString("phoneNumber"), dataReader.GetString("email"), loc);
-                dataReader.Close();
-                return new GetCompanyInfoResponse(true, "Successfully retrieved company information.", toReturn);
+                string query = @"SELECT * FROM " + databaseName + @".Companies " +
+                    @"WHERE companyName='" + compo.companyInfo.companyName + @"';";
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                MySqlDataReader dataReader = command.ExecuteReader();
+
+                if (dataReader.Read())
+                {
+                    string[] loc = new string[1];
+                    loc[0] = dataReader.GetString("location");
+                    CompanyInstance toReturn = new CompanyInstance(dataReader.GetString("companyName"), dataReader.GetString("phoneNumber"), dataReader.GetString("email"), loc);
+                    dataReader.Close();
+                    return new GetCompanyInfoResponse(true, "Successfully retrieved company information.", toReturn);
+                }
+                else
+                {
+                    dataReader.Close();
+                    return new GetCompanyInfoResponse(false, "Could not find any company information.", null);
+                }
             }
             else
             {
-                dataReader.Close();
+                Debug.consoleMsg("Unable to connect to database");
                 return new GetCompanyInfoResponse(false, "Could not find any company information.", null);
             }
         }
@@ -99,33 +101,33 @@ namespace CompanyListingsService.Database
         ///Searches for companies
         ///</summary>
         ///<param name="compo">Information about what to search for</param>
-        //TODO: Create company retreiving functionality
+        //TODO: May need to fix
         public CompanySearchResponse searchCompany(CompanySearchRequest compo)
         {
             if (openConnection() == true)
             {
-                string query = @"SELECT companyName FROM companyListings" +
-                    @"WHERE companyName LIKE " + compo.searchDeliminator + ";";
-
-                string message = "";
+                string query = @"SELECT companyName FROM " + databaseName + @".Companies " +
+                    @"WHERE companyName LIKE '%" + compo.searchDeliminator + @"%';";
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 MySqlDataReader dataReader = command.ExecuteReader();
                 CompanyList results = new CompanyList();
-                results.companyNames = new String[1000];
+                ArrayList res = new ArrayList();
                 for (int i = 0; dataReader.Read() == true; i++)
                 {
-                    results.companyNames[i] = dataReader.GetString("companyName");
+                    res.Add(dataReader.GetString("companyName"));
                 }
                 dataReader.Close();
+                results.companyNames = new string[res.Count];
+                res.CopyTo(results.companyNames);
 
                 closeConnection();
-                return new CompanySearchResponse(true, message, results);
+                return new CompanySearchResponse(true, "Sucessfully retrieved company information.", results);
             }
             else
             {
                 Debug.consoleMsg("Unable to connect to database");
-                return null;
+                return new CompanySearchResponse(false, "Could not find any company information.", null);
             }
         }
     }
@@ -152,6 +154,7 @@ namespace CompanyListingsService.Database
         /// This property represents the database schema, and will be used by the base class
         /// to create and delete the database.
         /// </summary>
+        //TODO: May need to fix
         protected override Table[] tables { get; } =
         {
             new Table
