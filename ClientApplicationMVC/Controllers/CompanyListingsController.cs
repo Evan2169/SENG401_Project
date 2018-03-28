@@ -10,6 +10,7 @@ using System.Web.Routing;
 using System.Net.Http;
 using System.Web.Script.Serialization;
 using System.Text;
+using System.Collections.Generic;
 
 namespace ClientApplicationMVC.Controllers
 {
@@ -93,9 +94,20 @@ namespace ClientApplicationMVC.Controllers
             {
                 ViewBag.CheckReviews = true;
                 ViewBag.CompanyInfo = infoResponse.companyInfo;
-                if(infoResponse.companyInfo.reviewList.reviews == null)
+                if (infoResponse.companyInfo.reviewList.reviews == null)
                 {
                     ViewBag.CheckReviews = false;
+                }
+                else
+                {
+                    List<ReviewInstance> r = infoResponse.companyInfo.reviewList.reviews;
+                    string[] timestamp_readable = new string[r.Count];
+                    for (int i = 0; i < timestamp_readable.Length; i++)
+                    {
+                        //TODO
+                        timestamp_readable[i] = new DateTime(Convert.ToInt64(r[i].timestamp)).ToString("MM-dd-yyyy-HH:mm:ss");
+                    }
+                    ViewBag.Timestamp = timestamp_readable;
                 }
             }
             return View("DisplayCompany");
@@ -104,7 +116,7 @@ namespace ClientApplicationMVC.Controllers
         public ActionResult SaveReview(string textUserReview, string rating, string companyName)
         {
             ReviewInstance review = new ReviewInstance(companyName, textUserReview , Convert.ToInt32(rating),
-                DateTime.Now.ToOADate(), Globals.getUser());
+                DateTimeOffset.Now.ToUnixTimeSeconds(), Globals.getUser());
             var review_JSON = new JavaScriptSerializer().Serialize(review);
             var client = new HttpClient();
             var content = new StringContent(review_JSON.ToString(), Encoding.UTF8, "application/json");

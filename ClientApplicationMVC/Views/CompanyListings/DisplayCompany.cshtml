@@ -52,11 +52,13 @@
 <h4>@ViewBag.CompanyName's Reviews</h4>
 @if (ViewBag.CheckReviews)
 {
+    int i = 0;
     foreach (var review in ViewBag.CompanyInfo.reviewList.reviews)
     {
-        <p>Username: @review.userName | Timestamp: @review.timestamp | Stars: @review.stars/5</p>
+        <p>Username: @review.userName | Timestamp: @ViewBag.Timestamp[i] | Stars: @review.stars/5</p>
         <p style="padding-left:4em;">Review: @review.review</p>
         <br />
+        i = i + 1;
     }
 }
 else
