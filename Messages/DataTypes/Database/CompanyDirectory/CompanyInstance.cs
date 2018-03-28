@@ -40,23 +40,24 @@ namespace Messages.DataTypes.Database.CompanyDirectory
         /// <summary>
         /// The name of the company, corresponds to the username of the companies account
         /// </summary>
-        public String companyName { get; set; } = null;
+        public String companyName { get; set; }
 
         /// <summary>
         /// The phone number of the company
         /// </summary>
-        public String phoneNumber { get; set; } = null;
+        public String phoneNumber { get; set; }
 
         /// <summary>
         /// The email of the company
         /// </summary>
-        public String email { get; set; } = null;
+        public String email { get; set; }
 
         /// <summary>
         /// A list containing the address' of the company
         /// </summary>
-        public String[] locations { get; set; } = null;
+        public String[] locations { get; set; }
 
-        
+        public ReviewList reviewList { get; set; }
+
     }
 }

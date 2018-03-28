@@ -1,13 +1,15 @@
 ﻿using CompanyListingsService.Database;
-
+using Messages.DataTypes.Database.CompanyDirectory;
 using Messages.ServiceBusRequest;
 using Messages.ServiceBusRequest.CompanyDirectory.Requests;
-
+using Messages.ServiceBusRequest.CompanyDirectory.Responses;
 using NServiceBus;
 using NServiceBus.Logging;
 
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace EchoService.Handlers
 {
@@ -35,7 +37,29 @@ namespace EchoService.Handlers
         public Task Handle(GetCompanyInfoRequest message, IMessageHandlerContext context)
         {
             //TODO: May need to edit.
-            return context.Reply(CompanyListingsDatabase.getInstance().getCompanyInfo(message));
+            GetCompanyInfoResponse infoResponse = CompanyListingsDatabase.getInstance().getCompanyInfo(message);
+
+            // Get Reviews
+            string result = "";
+            if (infoResponse.result)
+            {
+                try
+                {
+                    HttpClient getRevs = new HttpClient();
+                    string uri = "http://localhost:50151/DBLS/GetCompanyReviews/%7B%22companyName%22:%22" + infoResponse.companyInfo.companyName + "%22%7D";
+                    result = getRevs.GetStringAsync(uri).Result;
+                    System.Diagnostics.Debug.WriteLine(result);
+                    ReviewList r = new JavaScriptSerializer().Deserialize<ReviewList>(result);
+                    infoResponse.companyInfo.reviewList = r;
+                }
+                catch (Exception a)
+                {
+                    infoResponse.result = false;
+                    infoResponse.response = "Issue communicating with review system.";
+                }
+            }
+            
+            return context.Reply(infoResponse);
         }
     }
 }

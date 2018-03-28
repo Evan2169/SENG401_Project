@@ -8,6 +8,8 @@ using System;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Net.Http;
+using System.Web.Script.Serialization;
+using System.Text;
 
 namespace ClientApplicationMVC.Controllers
 {
@@ -84,35 +86,30 @@ namespace ClientApplicationMVC.Controllers
             }
 
             ViewBag.CompanyName = id;
-
             GetCompanyInfoRequest infoRequest = new GetCompanyInfoRequest(new CompanyInstance(id));
             GetCompanyInfoResponse infoResponse = connection.getCompanyInfo(infoRequest);
-            ViewBag.CompanyInfo = infoResponse.companyInfo;
 
-            string result = "No company reviews found";
             if (infoResponse.result)
             {
-                try
+                ViewBag.CheckReviews = true;
+                ViewBag.CompanyInfo = infoResponse.companyInfo;
+                if(infoResponse.companyInfo.reviewList.reviews == null)
                 {
-                    HttpClient getRevs = new HttpClient();
-                    string uri = "http://localhost:50151/DBLS/GetCompanyReviews/%7B%22companyName%22:%22" + infoResponse.companyInfo.companyName + "%22%7D";
-                    result = getRevs.GetStringAsync(uri).Result;
-                    System.Diagnostics.Debug.WriteLine(result);
-                    ViewBag.Review = result;
-                }
-                catch(Exception a)
-                {
-                    result = "Issue communicating with review system.";
+                    ViewBag.CheckReviews = false;
                 }
             }
-
-            //TODO: Finish
-            //HttpClient comReview = new HttpClient();
-            //StringContent cont = new StringContent("");
-            //cont.
-            //comReview.PostAsync("http://localhost:50151/DBLS/SaveCompanyReview/", cont);
-
             return View("DisplayCompany");
+        }
+
+        public ActionResult SaveReview(string textUserReview, string rating, string companyName)
+        {
+            ReviewInstance review = new ReviewInstance(companyName, textUserReview , Convert.ToInt32(rating),
+                DateTime.Now.ToOADate(), Globals.getUser());
+            var review_JSON = new JavaScriptSerializer().Serialize(review);
+            var client = new HttpClient();
+            var content = new StringContent(review_JSON.ToString(), Encoding.UTF8, "application/json");
+            var result = client.PostAsync("http://localhost:50151/DBLS/SaveCompanyReview/", content).Result;
+            return RedirectToAction("DisplayCompany", new { id = companyName });
         }
     }
 }
