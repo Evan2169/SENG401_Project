@@ -102,10 +102,12 @@ namespace ClientApplicationMVC.Controllers
                 {
                     List<ReviewInstance> r = infoResponse.companyInfo.reviewList.reviews;
                     string[] timestamp_readable = new string[r.Count];
+                    
                     for (int i = 0; i < timestamp_readable.Length; i++)
                     {
-                        //TODO
-                        timestamp_readable[i] = new DateTime(Convert.ToInt64(r[i].timestamp)).ToString("MM-dd-yyyy-HH:mm:ss");
+                        System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
+                        dtDateTime = dtDateTime.AddSeconds(Convert.ToInt64(r[i].timestamp)).ToLocalTime();
+                        timestamp_readable[i] = Convert.ToString(dtDateTime);
                     }
                     ViewBag.Timestamp = timestamp_readable;
                 }
