@@ -26,6 +26,8 @@ namespace AuthenticationService.Communication
                     return companySearch((CompanySearchRequest)companyListingsRequest);
                 case (CompanyDirectoryRequest.GetCompanyInfo):
                     return infoSearch((GetCompanyInfoRequest)companyListingsRequest);
+                case (CompanyDirectoryRequest.SaveCompanyReview):
+                    return saveReview((SaveCompanyReviewRequest)companyListingsRequest);
                 default:
                     return new ServiceBusResponse(false, "No results could be found pertaining to your search");
             }
@@ -43,6 +45,13 @@ namespace AuthenticationService.Communication
             SendOptions sendOptions = new SendOptions();
             sendOptions.SetDestination("CompanyListings");
             return requestingEndpoint.Request<ServiceBusResponse>(infoRequest, sendOptions).ConfigureAwait(false).GetAwaiter().GetResult();
+        }
+
+        private ServiceBusResponse saveReview(SaveCompanyReviewRequest saveRequest)
+        {
+            SendOptions sendOptions = new SendOptions();
+            sendOptions.SetDestination("CompanyListings");
+            return requestingEndpoint.Request<ServiceBusResponse>(saveRequest, sendOptions).ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }
 }

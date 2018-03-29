@@ -117,12 +117,21 @@ namespace ClientApplicationMVC.Controllers
 
         public ActionResult SaveReview(string textUserReview, string rating, string companyName)
         {
+            if (Globals.isLoggedIn() == false)
+            {
+                return RedirectToAction("Index", "Authentication");
+            }
+            ServiceBusConnection connection = ConnectionManager.getConnectionObject(Globals.getUser());
+            if (connection == null)
+            {
+                return RedirectToAction("Index", "Authentication");
+            }
+
             ReviewInstance review = new ReviewInstance(companyName, textUserReview , Convert.ToInt32(rating),
                 DateTimeOffset.Now.ToUnixTimeSeconds(), Globals.getUser());
-            var review_JSON = new JavaScriptSerializer().Serialize(review);
-            var client = new HttpClient();
-            var content = new StringContent(review_JSON.ToString(), Encoding.UTF8, "application/json");
-            var result = client.PostAsync("http://localhost:50151/DBLS/SaveCompanyReview/", content).Result;
+            SaveCompanyReviewRequest request = new SaveCompanyReviewRequest(review);
+            SaveCompanyReviewResponse response = connection.saveCompanyReview(request);
+
             return RedirectToAction("DisplayCompany", new { id = companyName });
         }
     }

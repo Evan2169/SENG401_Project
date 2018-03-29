@@ -83,6 +83,10 @@ namespace ClientApplicationMVC.Models
             return readUntilEOF();
         }
 
+        #endregion EchoServiceMessages
+
+        #region CompanyListingsServiceMessages
+
         public GetCompanyInfoResponse getCompanyInfo(GetCompanyInfoRequest infoRequest)
         {
             send(infoRequest);
@@ -95,7 +99,12 @@ namespace ClientApplicationMVC.Models
             return (CompanySearchResponse)readUntilEOF();
         }
 
-        #endregion EchoServiceMessages
+        public SaveCompanyReviewResponse saveCompanyReview(SaveCompanyReviewRequest saveComRequest)
+        {
+            send(saveComRequest);
+            return (SaveCompanyReviewResponse)readUntilEOF();
+        }
+        #endregion CompanyListingsServiceMessages
 
         #endregion ServiceBusMessages
 

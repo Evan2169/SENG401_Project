@@ -9,7 +9,7 @@ using NServiceBus.Logging;
 using System;
 using System.Threading.Tasks;
 
-namespace EchoService.Handlers
+namespace CompanyListingsService.Handlers
 {
 
     /// <summary>
