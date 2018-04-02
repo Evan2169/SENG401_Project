@@ -19,5 +19,5 @@ namespace Messages.ServiceBusRequest.Chat
         public ChatRequest requestType;
     }
 
-    public enum ChatRequest { sendMessage, getChatContacts, getChatHistory };
+    public enum ChatRequest { SendMessage, GetChatContacts, GetChatHistory };
 }

@@ -8,7 +8,7 @@ namespace Messages.ServiceBusRequest.Chat.Requests
     public class SendMessageRequest : ChatServiceRequest
     {
         public SendMessageRequest(ChatMessage message)
-            : base(ChatRequest.sendMessage)
+            : base(ChatRequest.SendMessage)
         {
             this.message = message;
         }

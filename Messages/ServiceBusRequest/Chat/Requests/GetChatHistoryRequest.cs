@@ -10,7 +10,7 @@ namespace Messages.ServiceBusRequest.Chat.Requests
     public class GetChatHistoryRequest : ChatServiceRequest, IMessage
     {
         public GetChatHistoryRequest(GetChatHistory getCommand)
-            : base(ChatRequest.getChatHistory)
+            : base(ChatRequest.GetChatHistory)
         {
             this.getCommand = getCommand;
         }

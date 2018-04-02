@@ -33,7 +33,7 @@ namespace ClientApplicationMVC.Models
         /// <param name="user">The user name</param>
         public static void setUser(string user)
         {
-            //TODO: What if the user is already logged in on another device ?
+            // TODO: What if the user is already logged in on another device ?
             HttpContext.Current.Session["user"] = user;
             //HttpContext.Current.Session.
             //HttpContext.Current.User.Identity.

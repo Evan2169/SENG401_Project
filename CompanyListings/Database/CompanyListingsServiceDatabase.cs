@@ -39,7 +39,6 @@ namespace CompanyListingsService.Database
         /// Saves the company info to the database
         /// </summary>
         /// <param name="compo">Information about the company</param>
-        //TODO: May need to fix
         public void saveCompany(CompanyListingsEvent compo)
         {
             if(openConnection())
@@ -65,7 +64,6 @@ namespace CompanyListingsService.Database
         ///Retrieves company info based on company name
         ///</summary>
         ///<param name="compo">Information about the company</param>
-        //TODO: May need to fix
         public GetCompanyInfoResponse getCompanyInfo(GetCompanyInfoRequest compo)
         {
             if (openConnection())
@@ -101,7 +99,6 @@ namespace CompanyListingsService.Database
         ///Searches for companies
         ///</summary>
         ///<param name="compo">Information about what to search for</param>
-        //TODO: May need to fix
         public CompanySearchResponse searchCompany(CompanySearchRequest compo)
         {
             if (openConnection() == true)
@@ -154,7 +151,6 @@ namespace CompanyListingsService.Database
         /// This property represents the database schema, and will be used by the base class
         /// to create and delete the database.
         /// </summary>
-        //TODO: May need to fix
         protected override Table[] tables { get; } =
         {
             new Table

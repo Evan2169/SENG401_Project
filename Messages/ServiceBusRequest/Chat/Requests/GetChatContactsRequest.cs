@@ -10,7 +10,7 @@ namespace Messages.ServiceBusRequest.Chat.Requests
     public class GetChatContactsRequest : ChatServiceRequest
     {
         public GetChatContactsRequest(GetChatContacts getCommand)
-            : base(ChatRequest.getChatContacts)
+            : base(ChatRequest.GetChatContacts)
         {
             this.getCommand = getCommand;
         }

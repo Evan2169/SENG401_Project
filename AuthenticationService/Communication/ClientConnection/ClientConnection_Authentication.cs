@@ -58,8 +58,7 @@ namespace AuthenticationService.Communication
                 initializeRequestingEndpoint();
                 eventPublishingEndpoint.Publish(new AccountCreated(command));
 
-                //Publish company event for company to be saved in DB
-                //TODO: May need to fix.
+                // Publish company event for company to be saved in DB
                 if (request.createCommand.type == Messages.DataTypes.AccountType.business)
                 {
                     string[] loc = new string[1];

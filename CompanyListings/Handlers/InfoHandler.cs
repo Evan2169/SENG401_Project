@@ -36,7 +36,6 @@ namespace CompanyListingsService.Handlers
         /// <returns>The response to be sent back to the calling process</returns>
         public Task Handle(GetCompanyInfoRequest message, IMessageHandlerContext context)
         {
-            //TODO: May need to edit.
             GetCompanyInfoResponse infoResponse = CompanyListingsDatabase.getInstance().getCompanyInfo(message);
 
             // Get Reviews

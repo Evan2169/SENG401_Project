@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApplicationMVC", "ClientApplicationMVC\ClientApplicationMVC.csproj", "{AC8E11E0-0720-4B9C-AB77-A86B1D3A7A3F}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationService", "AuthenticationService\AuthenticationService.csproj", "{ACEDA561-C03A-41DC-84B0-5E2978C6DF11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyListingsService", "CompanyListings\CompanyListingsService.csproj", "{BD6E654D-D1DC-4555-AFC6-C3EF34DC2B52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatService", "ChatService\ChatService.csproj", "{D49030C4-DAE7-4254-BC95-0A6CD34A50E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{BD6E654D-D1DC-4555-AFC6-C3EF34DC2B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD6E654D-D1DC-4555-AFC6-C3EF34DC2B52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD6E654D-D1DC-4555-AFC6-C3EF34DC2B52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D49030C4-DAE7-4254-BC95-0A6CD34A50E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D49030C4-DAE7-4254-BC95-0A6CD34A50E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D49030C4-DAE7-4254-BC95-0A6CD34A50E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D49030C4-DAE7-4254-BC95-0A6CD34A50E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
