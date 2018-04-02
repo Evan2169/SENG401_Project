@@ -14,6 +14,8 @@ using System.Text;
 using System.Threading;
 using Messages.ServiceBusRequest.CompanyDirectory.Requests;
 using Messages.ServiceBusRequest.CompanyDirectory.Responses;
+using Messages.ServiceBusRequest.Chat.Requests;
+using Messages.ServiceBusRequest.Chat.Responses;
 
 namespace ClientApplicationMVC.Models
 {
@@ -104,7 +106,33 @@ namespace ClientApplicationMVC.Models
             send(saveComRequest);
             return (SaveCompanyReviewResponse)readUntilEOF();
         }
+
         #endregion CompanyListingsServiceMessages
+
+        #region ChatServiceMessages
+
+        public GetChatContactsResponse getAllChatContacts(GetChatContactsRequest getContactsRequest)
+        {
+            //TO DO
+            send(getContactsRequest);
+            return (GetChatContactsResponse)readUntilEOF();
+        }
+
+        public GetChatHistoryResponse getChatHistory(GetChatHistoryRequest getHistoryRequest)
+        {
+            //TO DO
+            send(getHistoryRequest);
+            return (GetChatHistoryResponse)readUntilEOF();
+        }
+
+        public  ServiceBusResponse sendChatMessage(SendMessageRequest sendMessageRequest)
+        {
+            //TO DO
+            send(sendMessageRequest);
+            return (ServiceBusResponse)readUntilEOF();
+        }
+
+        #endregion ChatServiceMessages
 
         #endregion ServiceBusMessages
 
