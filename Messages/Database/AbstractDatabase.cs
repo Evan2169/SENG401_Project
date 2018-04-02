@@ -221,6 +221,7 @@ namespace Messages.Database
         /// <summary>
         /// This is the password used to login to the database by the connection
         /// </summary>
+        //TODO: --ENSURE THIS IS CORRECT BEFORE DEPLOYMENT--
         private const string Password = "Ameana85";
 
         /// <summary>
