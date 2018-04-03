@@ -11,6 +11,7 @@ using Messages.ServiceBusRequest.CompanyDirectory.Responses;
 using System.Collections;
 using System.Collections.Generic;
 using Messages.ServiceBusRequest.Chat.Requests;
+using Messages.DataTypes.Database.Chat;
 
 namespace ChatService.Database
 {
@@ -47,21 +48,21 @@ namespace ChatService.Database
         public List<string> getContacts(string user)
         {
             List<string> toReturn = new List<string>();
-            if(openConnection())
+            if (openConnection())
             {
                 try
                 {
                     string query = @"SELECT DISTINCT RECEIVER FROM " + dbname + @".CHAT WHERE SENDER = '" + user + @"';";
-                    
+
                     MySqlCommand com = new MySqlCommand(query, connection);
                     MySqlDataReader red = com.ExecuteReader();
 
-                    while(red.Read())
+                    while (red.Read())
                     {
                         toReturn.Add(red.GetString(0));
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Console.WriteLine("Issue retrieving contacts from database.");
                     Console.WriteLine(e.Message);
@@ -90,7 +91,7 @@ namespace ChatService.Database
             {
                 try
                 {
-                    string query = @"INSERT INTO CHAT(SENDER, RECEIVER, MESSAGE, TIMESTAMP) VALUES('" + chat.message.sender 
+                    string query = @"INSERT INTO CHAT(SENDER, RECEIVER, MESSAGE, TIMESTAMP) VALUES('" + chat.message.sender
                         + @"', '" + chat.message.receiver + @"', '" + chat.message.messageContents + @"', '" + chat.message.unix_timestamp + @"');";
                     Console.WriteLine(query);
                     MySqlCommand com = new MySqlCommand(query, connection);
@@ -113,6 +114,48 @@ namespace ChatService.Database
                 throw new Exception("Could not connect to database.");
             }
             return false;
+        }
+
+        public List<ChatMessage> getChats(ChatHistory hist)
+        {
+            List<ChatMessage> toReturn = new List<ChatMessage>();
+
+            if (openConnection())
+            {
+                try
+                {
+                    string query = @"SELECT MESSAGE FROM " + dbname + @".CHAT WHERE SENDER = '" + hist.user1 + @"' AND RECEIVER = '" + hist.user2 + "';";
+
+                    Console.WriteLine(query);
+
+                    MySqlCommand com = new MySqlCommand(query, connection);
+                    MySqlDataReader red = com.ExecuteReader();
+
+                    while (red.Read())
+                    {
+                        ChatMessage temp = new ChatMessage();
+                        temp.sender = hist.user1;
+                        temp.receiver = hist.user2;
+                        temp.messageContents = red.GetString(0);
+                        toReturn.Add(temp);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Issue retrieving messages from database.");
+                    Console.WriteLine(e.Message);
+                }
+                finally
+                {
+                    closeConnection();
+                }
+            }
+            else
+            {
+                throw new Exception("Could not connect to database.");
+            }
+
+            return toReturn;
         }
     }
 

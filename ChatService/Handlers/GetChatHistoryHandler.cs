@@ -1,4 +1,6 @@
-﻿using Messages.DataTypes.Database.CompanyDirectory;
+﻿using ChatService.Database;
+using Messages.DataTypes.Database.Chat;
+using Messages.DataTypes.Database.CompanyDirectory;
 using Messages.ServiceBusRequest;
 using Messages.ServiceBusRequest.Chat.Requests;
 using Messages.ServiceBusRequest.Chat.Responses;
@@ -35,10 +37,18 @@ namespace ChatService.Handlers
         /// <returns>The response to be sent back to the calling process</returns>
         public Task Handle(GetChatHistoryRequest message, IMessageHandlerContext context)
         {
-            // TODO: Fill out
-            GetChatHistoryResponse response = null;
+            // TODO: May need to fix
+            ChatHistory h = new ChatHistory();
+            h.user1 = message.getCommand.history.user1;
+            h.user2 = message.getCommand.history.user2;
+            h.messages = ChatDatabase.getInstance().getChats(message.getCommand.history);
+            GetChatHistory hist = new GetChatHistory();
+            hist.history = h;
 
-            return context.Reply(response);
+            if (h.messages.Count > 0)
+                return context.Reply(new GetChatHistoryResponse(true, "Successfully retrieved chats from database.", hist));
+            else
+                return context.Reply(new GetChatHistoryResponse(false, "Could not retrieve chats from database.", hist));
         }
     }
 }
