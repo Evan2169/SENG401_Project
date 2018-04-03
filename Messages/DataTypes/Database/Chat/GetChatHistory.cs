@@ -12,10 +12,6 @@ namespace Messages.DataTypes.Database.Chat
     [Serializable]
     public class GetChatHistory
     {
-        public GetChatHistory(ChatHistory hist)
-        {
-            history = hist;
-        }
         /// <summary>
         /// The chat history between these two users.
         /// </summary>
