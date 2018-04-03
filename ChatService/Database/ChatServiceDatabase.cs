@@ -124,7 +124,7 @@ namespace ChatService.Database
             {
                 try
                 {
-                    string query = @"SELECT MESSAGE FROM " + dbname + @".CHAT WHERE SENDER = '" + hist.user1 + @"' AND RECEIVER = '" + hist.user2 + "';"; 
+                    string query = @"SELECT * FROM " + dbname + @".CHAT WHERE SENDER = '" + hist.user1 + @"' AND RECEIVER = '" + hist.user2 + "';"; 
 
                     Console.WriteLine(query);
 
@@ -136,13 +136,14 @@ namespace ChatService.Database
                         ChatMessage temp = new ChatMessage();
                         temp.sender = hist.user1;
                         temp.receiver = hist.user2;
-                        temp.messageContents = red.GetString(0);
+                        temp.messageContents = red.GetString(2);
+                        temp.unix_timestamp = red.GetInt32(3);
                         toReturn.Add(temp);
                     }
 
                     red.Close();
 
-                    query = @"SELECT MESSAGE FROM " + dbname + @".CHAT WHERE SENDER = '" + hist.user2 + "' AND RECEIVER = '" + hist.user1 + "';";
+                    query = @"SELECT * FROM " + dbname + @".CHAT WHERE SENDER = '" + hist.user2 + "' AND RECEIVER = '" + hist.user1 + "';";
 
                     MySqlCommand com2 = new MySqlCommand(query, connection);
                     MySqlDataReader red2 = com2.ExecuteReader();
@@ -152,7 +153,8 @@ namespace ChatService.Database
                         ChatMessage temp = new ChatMessage();
                         temp.sender = hist.user2;
                         temp.receiver = hist.user1;
-                        temp.messageContents = red2.GetString(0);
+                        temp.messageContents = red2.GetString(2);
+                        temp.unix_timestamp = red2.GetInt32(3);
                         toReturn.Add(temp);
                     }
 
@@ -238,7 +240,7 @@ namespace ChatService.Database
                     ),
                     new Column
                     (
-                        "TIMESTAMP", "INT(64)",
+                        "TIMESTAMP", "INT(32)",
                         new string[]
                         {
                             "NOT NULL"
