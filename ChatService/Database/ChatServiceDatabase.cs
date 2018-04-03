@@ -52,7 +52,8 @@ namespace ChatService.Database
             {
                 try
                 {
-                    string query = @"SELECT DISTINCT SENDER FROM " + dbname + @".CHAT WHERE RECEIVER = '" + user + @"';";
+                    string query = "SELECT DISTINCT SENDER FROM " + dbname + ".CHAT WHERE RECEIVER = '" + user + "'" +
+                                    "UNION SELECT DISTINCT RECEIVER FROM " + dbname + ".CHAT WHERE SENDER = '" + user + "';";
 
                     MySqlCommand com = new MySqlCommand(query, connection);
                     MySqlDataReader red = com.ExecuteReader();
