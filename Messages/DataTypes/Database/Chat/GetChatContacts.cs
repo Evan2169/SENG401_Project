@@ -9,7 +9,7 @@ namespace Messages.NServiceBus.Commands
     /// Represents a request for a list of all users the given user has contacted
     /// </summary>
     [Serializable]
-    public partial class GetChatContacts: ICommand
+    public partial class GetChatContacts
     {
         /// <summary>
         /// The name of the user to get the chat contacts for
