@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Messages.NServiceBus.Commands
+namespace Messages.DataTypes.Database.Chat
 {
     /// <summary>
     /// Represents a request for a list of all users the given user has contacted
@@ -11,6 +11,12 @@ namespace Messages.NServiceBus.Commands
     [Serializable]
     public partial class GetChatContacts
     {
+        public GetChatContacts(string un, List<string> conts)
+        {
+            usersname = un;
+            contactNames = conts;
+        }
+
         /// <summary>
         /// The name of the user to get the chat contacts for
         /// </summary>

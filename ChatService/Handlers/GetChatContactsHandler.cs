@@ -2,6 +2,7 @@
 using Messages.ServiceBusRequest;
 using Messages.ServiceBusRequest.Chat.Requests;
 using Messages.ServiceBusRequest.Chat.Responses;
+using Messages.DataTypes.Database.Chat;
 using Messages.ServiceBusRequest.CompanyDirectory.Requests;
 using Messages.ServiceBusRequest.CompanyDirectory.Responses;
 using NServiceBus;
@@ -10,6 +11,7 @@ using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using ChatService.Database;
 
 namespace ChatService.Handlers
 {
@@ -36,8 +38,14 @@ namespace ChatService.Handlers
         /// <returns>The response to be sent back to the calling process</returns>
         public Task Handle(GetChatContactsRequest message, IMessageHandlerContext context)
         {
-            // TODO: Fill out
-            GetChatContactsResponse response = null;
+            GetChatContactsResponse response;
+            // TODO: May need to fix. Currently hardcoded to always retrieve client contacts.
+            GetChatContacts conts = new GetChatContacts(message.getCommand.usersname, ChatDatabase.getInstance().getContacts(message.getCommand.usersname));
+            
+            if(conts.contactNames.Count == 0)
+                response = new GetChatContactsResponse(false, "Could not find any contacts.", conts);
+            else
+                response = new GetChatContactsResponse(true, "Successfully retrieved contacts.", conts);
 
             return context.Reply(response);
         }

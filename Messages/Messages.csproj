@@ -50,6 +50,8 @@
     <Compile Include="Database\Table.cs" />
     <Compile Include="DataTypes\Database\Chat\ChatHistory.cs" />
     <Compile Include="DataTypes\Database\Chat\ChatMessage.cs" />
+    <Compile Include="DataTypes\Database\Chat\GetChatContacts.cs" />
+    <Compile Include="DataTypes\Database\Chat\GetChatHistory.cs" />
     <Compile Include="DataTypes\Database\CompanyDirectory\ReviewList.cs" />
     <Compile Include="DataTypes\Database\CompanyDirectory\ReviewInstance.cs" />
     <Compile Include="DataTypes\Database\CompanyDirectory\CompanyList.cs" />
@@ -58,8 +60,6 @@
     <Compile Include="DataTypes\SharedData.cs" />
     <Compile Include="Debug\Debug.cs" />
     <Compile Include="NServiceBus\Commands\CreateAccount.cs" />
-    <Compile Include="NServiceBus\Commands\GetChatContacts.cs" />
-    <Compile Include="NServiceBus\Commands\GetChatHistory.cs" />
     <Compile Include="NServiceBus\Events\AccountCreated.cs" />
     <Compile Include="NServiceBus\Events\AsIsEchoEvent.cs" />
     <Compile Include="NServiceBus\Events\ClientLogInAttempted.cs" />

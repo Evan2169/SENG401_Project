@@ -6,6 +6,7 @@ using Messages.ServiceBusRequest.Chat.Requests;
 using Messages.ServiceBusRequest.Chat.Responses;
 
 using System.Web.Mvc;
+using Messages.ServiceBusRequest;
 
 namespace ClientApplicationMVC.Controllers
 {
@@ -33,11 +34,7 @@ namespace ClientApplicationMVC.Controllers
                 return RedirectToAction("Index", "Authentication");
             }
 
-            GetChatContacts getContactsCommand = new GetChatContacts
-            {
-                usersname = Globals.getUser(),
-                contactNames = null
-            };
+            GetChatContacts getContactsCommand = new GetChatContacts(Globals.getUser(), null);
 
             GetChatContactsRequest contactsRequest = new GetChatContactsRequest(getContactsCommand);
             GetChatContactsResponse contactsResponse = connection.getAllChatContacts(contactsRequest);
@@ -105,7 +102,8 @@ namespace ClientApplicationMVC.Controllers
 
             SendMessageRequest request = new SendMessageRequest(chatMessage);
 
-            connection.sendChatMessage(request);
+            ServiceBusResponse resp = connection.sendChatMessage(request);
+            System.Diagnostics.Debug.WriteLine("CHECK: " + resp.response);
             return null;
         }
 

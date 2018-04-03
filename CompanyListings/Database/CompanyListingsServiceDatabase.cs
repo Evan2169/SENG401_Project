@@ -161,7 +161,7 @@ namespace CompanyListingsService.Database
                 {
                     new Column
                     (
-                        "companyName", "VARCHAR(15)",
+                        "companyName", "VARCHAR(50)",
                         new string[]
                         {
                             "NOT NULL",

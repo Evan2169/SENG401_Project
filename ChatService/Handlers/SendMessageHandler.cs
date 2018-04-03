@@ -31,10 +31,11 @@ namespace ChatService.Handlers
         /// <returns>The response to be sent back to the calling process</returns>
         public Task Handle(SendMessageRequest message, IMessageHandlerContext context)
         {
-            // TODO: Fill out
-            ServiceBusResponse response = null;
-
-            return context.Reply(response);
+            // TODO: May need to fix
+            if (Database.ChatDatabase.getInstance().saveChat(message))
+                return context.Reply(new ServiceBusResponse(true, "Successfully saved message."));
+            else
+                return context.Reply(new ServiceBusResponse(false, "Could not save chat to database."));
         }
     }
 }

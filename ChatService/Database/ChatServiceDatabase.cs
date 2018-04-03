@@ -9,6 +9,8 @@ using MySql.Data.MySqlClient;
 using System;
 using Messages.ServiceBusRequest.CompanyDirectory.Responses;
 using System.Collections;
+using System.Collections.Generic;
+using Messages.ServiceBusRequest.Chat.Requests;
 
 namespace ChatService.Database
 {
@@ -37,6 +39,81 @@ namespace ChatService.Database
 
         // TODO: Complete necessary functions for chat database
 
+        /// <summary>
+        /// This function contacts the database and returns a list of all recipients of messages sent by 'user'
+        /// </summary>
+        /// <param name="user">Name of the user to retrieve sent messages of.</param>
+        /// <returns>List of contacts.</returns>
+        public List<string> getContacts(string user)
+        {
+            List<string> toReturn = new List<string>();
+            if(openConnection())
+            {
+                try
+                {
+                    string query = @"SELECT DISTINCT RECEIVER FROM " + dbname + @".CHAT WHERE SENDER = '" + user + @"';";
+                    
+                    MySqlCommand com = new MySqlCommand(query, connection);
+                    MySqlDataReader red = com.ExecuteReader();
+
+                    while(red.Read())
+                    {
+                        toReturn.Add(red.GetString(0));
+                    }
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("Issue retrieving contacts from database.");
+                    Console.WriteLine(e.Message);
+                }
+                finally
+                {
+                    closeConnection();
+                }
+
+                return toReturn;
+            }
+            else
+            {
+                throw new Exception("Could not connect to database.");
+            }
+        }
+
+        /// <summary>
+        /// Saves a chat message to the chat database
+        /// </summary>
+        /// <param name="chat">Contains the information to save.</param>
+        /// <returns>returns true if chat successfully saved to database, false otherwise.</returns>
+        public bool saveChat(SendMessageRequest chat)
+        {
+            if (openConnection())
+            {
+                try
+                {
+                    string query = @"INSERT INTO CHAT(SENDER, RECEIVER, MESSAGE, TIMESTAMP) VALUES('" + chat.message.sender 
+                        + @"', '" + chat.message.receiver + @"', '" + chat.message.messageContents + @"', '" + chat.message.unix_timestamp + @"');";
+                    Console.WriteLine(query);
+                    MySqlCommand com = new MySqlCommand(query, connection);
+                    if (com.ExecuteNonQuery() >= 1)
+                        return true;
+                    else
+                        return false;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Issue saving chat to database.");
+                }
+                finally
+                {
+                    closeConnection();
+                }
+            }
+            else
+            {
+                throw new Exception("Could not connect to database.");
+            }
+            return false;
+        }
     }
 
     /// <summary>
@@ -62,49 +139,51 @@ namespace ChatService.Database
         /// to create and delete the database.
         /// </summary>
         
-        // TODO: Need to setup chat database table
+        // TODO: May need to fix
         protected override Table[] tables { get; } =
         {
             new Table
             (
                 dbname,
-                "Companies",
+                "CHAT",
                 new Column[]
                 {
                     new Column
                     (
-                        "companyName", "VARCHAR(15)",
+                        "SENDER", "VARCHAR(50)",
                         new string[]
                         {
-                            "NOT NULL",
-                            "UNIQUE"
-                        }, true
+                            "NOT NULL"
+                        }, 
+                        true
                     ),
                      new Column
                     (
-                        "email", "VARCHAR(100)",
+                        "RECEIVER", "VARCHAR(50)",
                         new string[] 
                         {
                             "NOT NULL"
                         },
+                        true
+                    ),
+                    new Column
+                    (
+                        "MESSAGE", "VARCHAR(500)",
+                        new string[]
+                        {
+                            "NOT NULL"
+                        }, 
                         false
                     ),
                     new Column
                     (
-                        "phoneNumber", "VARCHAR(10)",
+                        "TIMESTAMP", "INT(64)",
                         new string[]
                         {
                             "NOT NULL"
-                        }, false
-                    ),
-                    new Column
-                    (
-                        "location", "VARCHAR(50)",
-                        new string[]
-                        {
-                            "NOT NULL"
-                        }, false
-                    ),
+                        }, 
+                        true
+                    )
                 }
             )
         };

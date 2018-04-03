@@ -1,4 +1,5 @@
-﻿using Messages.NServiceBus.Commands;
+﻿using Messages.DataTypes.Database.Chat;
+using Messages.NServiceBus.Commands;
 
 using NServiceBus;
 
