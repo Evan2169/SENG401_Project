@@ -52,7 +52,7 @@ namespace ChatService.Database
             {
                 try
                 {
-                    string query = @"SELECT DISTINCT RECEIVER FROM " + dbname + @".CHAT WHERE SENDER = '" + user + @"';";
+                    string query = @"SELECT DISTINCT SENDER FROM " + dbname + @".CHAT WHERE RECEIVER = '" + user + @"';";
 
                     MySqlCommand com = new MySqlCommand(query, connection);
                     MySqlDataReader red = com.ExecuteReader();
@@ -124,7 +124,7 @@ namespace ChatService.Database
             {
                 try
                 {
-                    string query = @"SELECT MESSAGE FROM " + dbname + @".CHAT WHERE SENDER = '" + hist.user1 + @"' AND RECEIVER = '" + hist.user2 + "';";
+                    string query = @"SELECT MESSAGE FROM " + dbname + @".CHAT WHERE SENDER = '" + hist.user1 + @"' AND RECEIVER = '" + hist.user2 + "';"; 
 
                     Console.WriteLine(query);
 
@@ -139,6 +139,24 @@ namespace ChatService.Database
                         temp.messageContents = red.GetString(0);
                         toReturn.Add(temp);
                     }
+
+                    red.Close();
+
+                    query = @"SELECT MESSAGE FROM " + dbname + @".CHAT WHERE SENDER = '" + hist.user2 + "' AND RECEIVER = '" + hist.user1 + "';";
+
+                    MySqlCommand com2 = new MySqlCommand(query, connection);
+                    MySqlDataReader red2 = com2.ExecuteReader();
+
+                    while (red2.Read())
+                    {
+                        ChatMessage temp = new ChatMessage();
+                        temp.sender = hist.user2;
+                        temp.receiver = hist.user1;
+                        temp.messageContents = red2.GetString(0);
+                        toReturn.Add(temp);
+                    }
+
+                    toReturn.Sort();
                 }
                 catch (Exception e)
                 {
