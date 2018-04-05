@@ -42,6 +42,7 @@ namespace CompanyListingsService.Handlers
             var review_JSON = new JavaScriptSerializer().Serialize(review);
             var client = new HttpClient();
             var content = new StringContent(review_JSON.ToString(), Encoding.UTF8, "application/json");
+            //TODO: --ENSURE THIS IS CORRECT BEFORE DEPLOYMENT--
             var result = client.PostAsync("http://localhost:50151/DBLS/SaveCompanyReview/", content).Result;
             SaveCompanyReviewResponse reviewResponse;
             if (result.IsSuccessStatusCode)

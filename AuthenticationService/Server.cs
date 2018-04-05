@@ -120,6 +120,9 @@ namespace AuthenticationService
         /// The location of the certificate on the machine.
         /// The server will not be able to run properly unless this variable is properly set.
         /// </summary>
+        //TODO: --ENSURE THIS IS CORRECT BEFORE DEPLOYMENT--
         private const string certificateLocation = "C:\\Users\\Evan\\Documents\\SENG401\\Project\\ProjectSkeleton\\Certificate\\SENG401TenYears.pfx";
+        //TODO: --CHANGE URL IN VIEWS/AUTHENTICATION/INDEX.CSHTML--
+        //TODO: --CHANGE URL IN VIEWS/AUTHENTICATION/LOGGEDIN.CSHTML--
     }
 }

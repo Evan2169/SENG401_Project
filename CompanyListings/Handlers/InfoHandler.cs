@@ -45,6 +45,7 @@ namespace CompanyListingsService.Handlers
                 try
                 {
                     HttpClient getRevs = new HttpClient();
+                    //TODO: --ENSURE THIS IS CORRECT BEFORE DEPLOYMENT--
                     string uri = "http://localhost:50151/DBLS/GetCompanyReviews/%7B%22companyName%22:%22" + infoResponse.companyInfo.companyName + "%22%7D";
                     result = getRevs.GetStringAsync(uri).Result;
                     System.Diagnostics.Debug.WriteLine(result);

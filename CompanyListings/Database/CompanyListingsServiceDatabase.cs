@@ -43,15 +43,25 @@ namespace CompanyListingsService.Database
         {
             if(openConnection())
             {
-                string query = @"INSERT INTO " + databaseName + @".Companies " +
+                try
+                {
+                    string query = @"INSERT INTO " + databaseName + @".Companies " +
                     @"VALUES('" + compo.company.companyName +
                     @"', '" + compo.company.email + @"', '" + compo.company.phoneNumber
                     + @"', '" + compo.company.locations[0] + @"');";    //Assumes array of length one (only oone location)
 
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.ExecuteNonQuery();
-
-                closeConnection();
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception a)
+                {
+                    Console.WriteLine("Issue saving company to the database.");
+                    Console.WriteLine(a.Message);
+                }
+                finally
+                {
+                    closeConnection();
+                }
             }
             else
             {
@@ -68,25 +78,33 @@ namespace CompanyListingsService.Database
         {
             if (openConnection())
             {
-                string query = @"SELECT * FROM " + databaseName + @".Companies " +
-                    @"WHERE companyName='" + compo.companyInfo.companyName + @"';";
-
-                MySqlCommand command = new MySqlCommand(query, connection);
-                MySqlDataReader dataReader = command.ExecuteReader();
-
-                if (dataReader.Read())
+                GetCompanyInfoResponse toReturn = new GetCompanyInfoResponse(false, "Could not find any company information.", null);
+                try
                 {
-                    string[] loc = new string[1];
-                    loc[0] = dataReader.GetString("location");
-                    CompanyInstance toReturn = new CompanyInstance(dataReader.GetString("companyName"), dataReader.GetString("phoneNumber"), dataReader.GetString("email"), loc);
-                    dataReader.Close();
-                    return new GetCompanyInfoResponse(true, "Successfully retrieved company information.", toReturn);
+                    string query = @"SELECT * FROM " + databaseName + @".Companies " +
+                        @"WHERE companyName='" + compo.companyInfo.companyName + @"';";
+
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    MySqlDataReader dataReader = command.ExecuteReader();
+
+                    if (dataReader.Read())
+                    {
+                        string[] loc = new string[1];
+                        loc[0] = dataReader.GetString("location");
+                        CompanyInstance cump = new CompanyInstance(dataReader.GetString("companyName"), dataReader.GetString("phoneNumber"), dataReader.GetString("email"), loc);
+                        toReturn = new GetCompanyInfoResponse(true, "Successfully retrieved company information.", cump);
+                    }
                 }
-                else
+                catch (Exception a)
                 {
-                    dataReader.Close();
-                    return new GetCompanyInfoResponse(false, "Could not find any company information.", null);
+                    Console.WriteLine("Issue saving company to the database.");
+                    Console.WriteLine(a.Message);
                 }
+                finally
+                {
+                    closeConnection();
+                }
+                return toReturn;
             }
             else
             {
@@ -103,23 +121,38 @@ namespace CompanyListingsService.Database
         {
             if (openConnection() == true)
             {
-                string query = @"SELECT companyName FROM " + databaseName + @".Companies " +
-                    @"WHERE companyName LIKE '%" + compo.searchDeliminator + @"%';";
+                CompanySearchResponse toReturn = new CompanySearchResponse(false, "Issue searching for companies.", null);
 
-                MySqlCommand command = new MySqlCommand(query, connection);
-                MySqlDataReader dataReader = command.ExecuteReader();
-                CompanyList results = new CompanyList();
-                ArrayList res = new ArrayList();
-                for (int i = 0; dataReader.Read() == true; i++)
+                try
                 {
-                    res.Add(dataReader.GetString("companyName"));
-                }
-                dataReader.Close();
-                results.companyNames = new string[res.Count];
-                res.CopyTo(results.companyNames);
+                    string query = @"SELECT companyName FROM " + databaseName + @".Companies " +
+                        @"WHERE companyName LIKE '%" + compo.searchDeliminator + @"%';";
 
-                closeConnection();
-                return new CompanySearchResponse(true, "Sucessfully retrieved company information.", results);
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    MySqlDataReader dataReader = command.ExecuteReader();
+                    CompanyList results = new CompanyList();
+                    ArrayList res = new ArrayList();
+                    for (int i = 0; dataReader.Read() == true; i++)
+                    {
+                        res.Add(dataReader.GetString("companyName"));
+                    }
+                    dataReader.Close();
+                    results.companyNames = new string[res.Count];
+                    res.CopyTo(results.companyNames);
+
+                    toReturn = new CompanySearchResponse(true, "Sucessfully retrieved company information.", results);
+                }
+                catch(Exception a)
+                {
+                    Console.WriteLine("Issue searching for companies.");
+                    Console.WriteLine(a.Message);
+                }
+                finally
+                {
+                    closeConnection();
+                }
+
+                return toReturn;
             }
             else
             {
