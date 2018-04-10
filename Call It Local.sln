@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyListingsService", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatService", "ChatService\ChatService.csproj", "{D49030C4-DAE7-4254-BC95-0A6CD34A50E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherService", "WeatherService\WeatherService.csproj", "{180548AA-AF88-4A53-B5DF-C43A540C2800}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{D49030C4-DAE7-4254-BC95-0A6CD34A50E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D49030C4-DAE7-4254-BC95-0A6CD34A50E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D49030C4-DAE7-4254-BC95-0A6CD34A50E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{180548AA-AF88-4A53-B5DF-C43A540C2800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{180548AA-AF88-4A53-B5DF-C43A540C2800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{180548AA-AF88-4A53-B5DF-C43A540C2800}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{180548AA-AF88-4A53-B5DF-C43A540C2800}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

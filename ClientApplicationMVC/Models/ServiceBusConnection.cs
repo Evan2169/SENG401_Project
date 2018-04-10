@@ -16,6 +16,8 @@ using Messages.ServiceBusRequest.CompanyDirectory.Requests;
 using Messages.ServiceBusRequest.CompanyDirectory.Responses;
 using Messages.ServiceBusRequest.Chat.Requests;
 using Messages.ServiceBusRequest.Chat.Responses;
+using Messages.ServiceBusRequest.Weather.Requests;
+using Messages.ServiceBusRequest.Weather.Responses;
 
 namespace ClientApplicationMVC.Models
 {
@@ -113,26 +115,33 @@ namespace ClientApplicationMVC.Models
 
         public GetChatContactsResponse getAllChatContacts(GetChatContactsRequest getContactsRequest)
         {
-            //TO DO
             send(getContactsRequest);
             return (GetChatContactsResponse)readUntilEOF();
         }
 
         public GetChatHistoryResponse getChatHistory(GetChatHistoryRequest getHistoryRequest)
         {
-            //TO DO
             send(getHistoryRequest);
             return (GetChatHistoryResponse)readUntilEOF();
         }
 
         public  ServiceBusResponse sendChatMessage(SendMessageRequest sendMessageRequest)
         {
-            //TO DO
             send(sendMessageRequest);
             return (ServiceBusResponse)readUntilEOF();
         }
 
         #endregion ChatServiceMessages
+
+        #region WeatherServiceMessages
+
+        public GetWeatherResponse getWeather(GetWeatherRequest getWeatherRequest)
+        {
+            send(getWeatherRequest);
+            return (GetWeatherResponse)readUntilEOF();
+        }
+
+        #endregion WeatherServiceMessages
 
         #endregion ServiceBusMessages
 
