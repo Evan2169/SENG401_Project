@@ -42,7 +42,7 @@ namespace Weather.Handlers
             
             //TODO: Need to do some error checking code. May need to fix.
 
-            string apiKey = "fRA3peleZnVpeYrWfVBwBDcy5g7Li1GV"; //Had to get a new key.
+            string apiKey = "0j8cSCLY4C9e6mt2EbOHsSh9Tzd9VoOW"; //Had to get a new key.
             HttpClient request = new HttpClient();
 
             //Use a GET request to get city key.
@@ -51,25 +51,25 @@ namespace Weather.Handlers
             Console.WriteLine(cityRequestReponse);
             JavaScriptSerializer ser = new JavaScriptSerializer();
             //Index[0].key should give the key of the first city found, as per the api documentation.
-            string cityKey = (string)ser.Deserialize<dynamic>(cityRequestReponse)["key"];
+            string cityKey = (string)ser.Deserialize<dynamic>(cityRequestReponse)[0]["Key"];
             Console.WriteLine(cityKey);
 
             //Use a GET request to retrieve weather information corresponding to the given key.
-            uri = @"http://dataservice.accuweather.com/currentconditions/v1/" + cityKey + @"?apikey=" + apiKey + @"&details=false";
+            uri = @"http://dataservice.accuweather.com/currentconditions/v1/" + cityKey + @"?apikey=" + apiKey + @"&details=true";
             string weatherRequestResponse = request.GetStringAsync(uri).Result;
             Console.WriteLine(weatherRequestResponse);
             //The indexes/attributes correspond to information given in the api documentation.
             dynamic deserializedObj = ser.Deserialize<dynamic>(weatherRequestResponse);
-            string realFeel = deserializedObj["RealFeelTemperature"]["Metric"]["Value"];
-            string temperature = deserializedObj["Temperature"]["Metric"]["Value"];
-            string weatherText = deserializedObj["WeatherText"];
+            double realFeel = (double)deserializedObj[0]["RealFeelTemperature"]["Metric"]["Value"];
+            double temperature = (double)deserializedObj[0]["Temperature"]["Metric"]["Value"];
+            string weatherText = (string)deserializedObj[0]["WeatherText"];
 
             CompanyWeather toReturn = new CompanyWeather
             {
-                realFeelTemperature = realFeel,
+                realFeelTemperature = ""+realFeel,
                 weatherText = weatherText,
                 location = message.companyWeather.location,
-                temperature = temperature
+                temperature = ""+temperature
             };
 
             return context.Reply(new GetWeatherResponse(true, "Successfully obtained weather information.", toReturn));
