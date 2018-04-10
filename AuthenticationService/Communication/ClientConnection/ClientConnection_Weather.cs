@@ -34,7 +34,7 @@ namespace AuthenticationService.Communication
         private ServiceBusResponse getWeather(GetWeatherRequest getWeatherRequest)
         {
             SendOptions sendOptions = new SendOptions();
-            sendOptions.SetDestination("Chat");
+            sendOptions.SetDestination("Weather");
             return requestingEndpoint.Request<ServiceBusResponse>(getWeatherRequest, sendOptions).ConfigureAwait(false).GetAwaiter().GetResult();
         }
     }

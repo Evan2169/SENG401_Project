@@ -87,7 +87,7 @@
     <Compile Include="ServiceBusRequest\Echo\Requests\ReverseEchoRequest.cs" />
     <Compile Include="ServiceBusRequest\ServiceBusRequest.cs" />
     <Compile Include="ServiceBusRequest\ServiceBusResponse.cs" />
-    <Compile Include="ServiceBusRequest\Weather\EchoServiceRequest.cs" />
+    <Compile Include="ServiceBusRequest\Weather\WeatherServiceRequest.cs" />
     <Compile Include="ServiceBusRequest\Weather\Requests\GetWeatherRequest.cs" />
     <Compile Include="ServiceBusRequest\Weather\Responses\GetWeatherResponse.cs" />
   </ItemGroup>

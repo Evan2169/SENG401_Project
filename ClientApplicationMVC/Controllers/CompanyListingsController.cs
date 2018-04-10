@@ -11,6 +11,9 @@ using System.Net.Http;
 using System.Web.Script.Serialization;
 using System.Text;
 using System.Collections.Generic;
+using Messages.ServiceBusRequest.Weather.Requests;
+using Messages.DataTypes.Database.Weather;
+using Messages.ServiceBusRequest.Weather.Responses;
 
 namespace ClientApplicationMVC.Controllers
 {
@@ -112,6 +115,14 @@ namespace ClientApplicationMVC.Controllers
                     ViewBag.Timestamp = timestamp_readable;
                 }
             }
+
+            //Still assume location array is of one value.
+            GetWeatherRequest weatherRequest = new GetWeatherRequest(new CompanyWeather { location = infoResponse.companyInfo.locations[0] });
+            GetWeatherResponse weatherResponse = connection.getWeather(weatherRequest);
+            ViewBag.realFeel = weatherResponse.companyWeather.realFeelTemperature;
+            ViewBag.temp = weatherResponse.companyWeather.temperature;
+            ViewBag.weatherText = weatherResponse.companyWeather.weatherText;
+
             return View("DisplayCompany");
         }
 

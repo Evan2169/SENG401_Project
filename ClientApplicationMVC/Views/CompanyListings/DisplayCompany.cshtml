@@ -11,6 +11,15 @@
     <p style="padding-left:4em;">@location</p>
     <br />
 }
+
+<div style="border:double thick black" class="row">
+    <div class="col-md-6">
+        @ViewBag.realFeel;
+        @ViewBag.temp;
+        @ViewBag.weatherText;
+    </div>
+</div>
+
 <div style="height:100px">
     <h4>Start a conversation with @ViewBag.CompanyName</h4>
     <div style="width:350px; float:left">
