@@ -42,36 +42,56 @@ namespace Weather.Handlers
             
             //TODO: Need to do some error checking code. May need to fix.
 
-            string apiKey = "0j8cSCLY4C9e6mt2EbOHsSh9Tzd9VoOW"; //Had to get a new key.
+            string apiKey = "OdhArLNV6xSN8BXcdbJ5mliZyqPZ7OMV"; //Had to get a new key.
             HttpClient request = new HttpClient();
+            string cityKey = "";
+            string uri;
+            JavaScriptSerializer ser = new JavaScriptSerializer();
+            double realFeel = 0;
+            double temperature = 0;
+            string weatherText = "";
 
             //Use a GET request to get city key.
-            string uri = @"http://dataservice.accuweather.com/locations/v1/cities/search?apikey=" + apiKey + @"&q=" + message.companyWeather.location + @"&details=false";
-            string cityRequestReponse = request.GetStringAsync(uri).Result;
-            Console.WriteLine(cityRequestReponse);
-            JavaScriptSerializer ser = new JavaScriptSerializer();
-            //Index[0].key should give the key of the first city found, as per the api documentation.
-            string cityKey = (string)ser.Deserialize<dynamic>(cityRequestReponse)[0]["Key"];
-            Console.WriteLine(cityKey);
+            uri = @"http://dataservice.accuweather.com/locations/v1/cities/search?apikey=" + apiKey + @"&q=" + message.companyWeather.location + @"&details=false";
+            string cityRequestReponse = "";
+            try
+            {
+                cityRequestReponse = request.GetStringAsync(uri).Result;
+                //Index[0].key should give the key of the first city found, as per the api documentation.
+                cityKey = (string)ser.Deserialize<dynamic>(cityRequestReponse)[0]["Key"];
+            }
+            catch(Exception a)
+            {
+                return context.Reply(new GetWeatherResponse(false, "An error occurred while contacting the weather service.", null));
+            }
+            
 
             //Use a GET request to retrieve weather information corresponding to the given key.
             uri = @"http://dataservice.accuweather.com/currentconditions/v1/" + cityKey + @"?apikey=" + apiKey + @"&details=true";
-            string weatherRequestResponse = request.GetStringAsync(uri).Result;
-            Console.WriteLine(weatherRequestResponse);
+            string weatherRequestResponse = "";
+            try
+            {
+                weatherRequestResponse = request.GetStringAsync(uri).Result;
+                dynamic deserializedObj = ser.Deserialize<dynamic>(weatherRequestResponse);
+                realFeel = (double)deserializedObj[0]["RealFeelTemperature"]["Metric"]["Value"];
+                temperature = (double)deserializedObj[0]["Temperature"]["Metric"]["Value"];
+                weatherText = (string)deserializedObj[0]["WeatherText"];
+            }
+            catch(Exception b)
+            {
+                return context.Reply(new GetWeatherResponse(false, "An error occurred while contacting the weather service.", null));
+            }
             //The indexes/attributes correspond to information given in the api documentation.
-            dynamic deserializedObj = ser.Deserialize<dynamic>(weatherRequestResponse);
-            double realFeel = (double)deserializedObj[0]["RealFeelTemperature"]["Metric"]["Value"];
-            double temperature = (double)deserializedObj[0]["Temperature"]["Metric"]["Value"];
-            string weatherText = (string)deserializedObj[0]["WeatherText"];
+            
 
             CompanyWeather toReturn = new CompanyWeather
             {
-                realFeelTemperature = ""+realFeel,
+                realFeelTemperature = realFeel.ToString(),
                 weatherText = weatherText,
                 location = message.companyWeather.location,
-                temperature = ""+temperature
+                temperature = temperature.ToString()
             };
-
+            
             return context.Reply(new GetWeatherResponse(true, "Successfully obtained weather information.", toReturn));
             
             //return context.Reply(new GetWeatherResponse(true, "", null));

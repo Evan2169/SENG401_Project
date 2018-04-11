@@ -12,13 +12,116 @@
     <br />
 }
 
-<div style="border:double thick black" class="row">
-    <div class="col-md-6">
-       Real Feel Temperature: @ViewBag.realFeel;
-       Temperature: @ViewBag.temp;
-       Weather: @ViewBag.weatherText
+<br />
+
+@if((bool)ViewBag.success)
+{ 
+<div style="border-top: thin solid gray; border-bottom: thin solid gray;" class="row">
+    <div class="col-md-10">
+        @{ 
+        string temp = (string)ViewBag.weatherText;
+        //Put in all lowercase to guarantee correctness.
+        temp = temp.ToLower();
+        switch(temp)
+        {
+            case (@"sunny"):
+                <img src="~/Content/Weather_Icons/sunny.png" width="50" height="50" />
+                break;
+
+            case (@"mostly sunny"):
+                <img src="~/Content/Weather_Icons/sunny.png" width="50" height="50" />
+                break;
+
+            case (@"partly sunny"):
+                <img src="~/Content/Weather_Icons/sunny.png" width="50" height="50" />
+                break;
+
+            case (@"intermittent clouds"):
+                <img src = "~/Content/Weather_Icons/mostlycloud.png" width = "50" height = "50" />
+                break;
+
+            case (@"hazy sunshine"):
+                <img src="~/Content/Weather_Icons/mostlycloud.png" width="50" height="50" />
+                break;
+
+            case (@"mostly cloudy"):
+                <img src="~/Content/Weather_Icons/mostlycloud.png" width="50" height="50" />
+                break;
+
+            case (@"cloudy"):
+                <img src="~/Content/Weather_Icons/mostlycloud.png" width="50" height="50" />
+                break;
+
+            case (@"dreary (overcast)"):
+                <img src="~/Content/Weather_Icons/mostlycloud.png" width="50" height="50" />
+                break;
+           
+            case (@"showers"):
+                <img src="~/Content/Weather_Icons/rain.png" width="50" height="50" />
+                break;
+
+            case (@"mostly cloudy w/ showers"):
+                <img src="~/Content/Weather_Icons/rain.png" width="50" height="50" />
+                break;
+            
+            case (@"partly sunny w/ showers"):
+                <img src="~/Content/Weather_Icons/rain.png" width="50" height="50" />
+                break;
+            
+            case (@"t-storms"):
+                <img src="~/Content/Weather_Icons/rain.png" width="50" height="50" />
+                break;
+
+            case (@"mostly cloudy w/ t-storms"):
+                <img src="~/Content/Weather_Icons/rain.png" width="50" height="50" />
+                break;
+            
+            case (@"partly sunny w/ t-storms"):
+                <img src="~/Content/Weather_Icons/rain.png" width="50" height="50" />
+                break;
+            
+            case (@"snow"):
+                <img src="~/Content/Weather_Icons/snow.png" width="50" height="50" />
+                break;
+            
+            case (@"mostly cloudy w/ snow"):
+                <img src="~/Content/Weather_Icons/snow.png" width="50" height="50" />
+                break;
+            
+            case (@"ice"):
+                <img src="~/Content/Weather_Icons/snow.png" width="50" height="50" />
+                break;
+            
+            case (@"sleet"):
+                <img src="~/Content/Weather_Icons/snow.png" width="50" height="50" />
+                break;
+            
+            case (@"freezing rain"):
+                <img src="~/Content/Weather_Icons/snow.png" width="50" height="50" />
+                break;
+
+            case (@"rain and snow"):
+                <img src="~/Content/Weather_Icons/snow.png" width="50" height="50" />
+                break;
+
+            default:
+                <img src="~/Content/Weather_Icons/no.png" width="50" height="50"/>
+                break;
+        }
+        }
+        <span style="font: bold; color: seagreen">Real Feel Temperature:</span> @ViewBag.realFeel °C
+        <span style="font: bold; color: seagreen">Temperature:</span> @ViewBag.temp °C
+        <span style="font: bold; color: seagreen">Weather:</span> @ViewBag.weatherText
     </div>
 </div>
+ }
+else
+{
+    <p>An error occurred when fetching weather information for this company.</p>
+    <p>Please ensure that the location of the company is valid.</p>
+}
+
+<br />
 
 <div style="height:100px">
     <h4>Start a conversation with @ViewBag.CompanyName</h4>

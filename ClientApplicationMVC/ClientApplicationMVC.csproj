@@ -160,6 +160,12 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ChatStyles.css" />
+    <Content Include="Content\Weather_Icons\cloudy.png" />
+    <Content Include="Content\Weather_Icons\mostlycloud.png" />
+    <Content Include="Content\Weather_Icons\no.png" />
+    <Content Include="Content\Weather_Icons\rain.png" />
+    <Content Include="Content\Weather_Icons\snow.png" />
+    <Content Include="Content\Weather_Icons\sunny.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Site.css" />

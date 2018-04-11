@@ -119,9 +119,15 @@ namespace ClientApplicationMVC.Controllers
             //Still assume location array is of one value.
             GetWeatherRequest weatherRequest = new GetWeatherRequest(new CompanyWeather { location = infoResponse.companyInfo.locations[0] });
             GetWeatherResponse weatherResponse = connection.getWeather(weatherRequest);
-            ViewBag.realFeel = weatherResponse.companyWeather.realFeelTemperature;
-            ViewBag.temp = weatherResponse.companyWeather.temperature;
-            ViewBag.weatherText = weatherResponse.companyWeather.weatherText;
+            if (!weatherResponse.result)
+                ViewBag.success = false;
+            else
+            {
+                ViewBag.success = true;
+                ViewBag.realFeel = weatherResponse.companyWeather.realFeelTemperature;
+                ViewBag.temp = weatherResponse.companyWeather.temperature;
+                ViewBag.weatherText = weatherResponse.companyWeather.weatherText;
+            }
 
             return View("DisplayCompany");
         }
