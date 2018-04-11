@@ -40,9 +40,9 @@ namespace Weather.Handlers
         public Task Handle(GetWeatherRequest message, IMessageHandlerContext context)
         {
             
-            //TODO: Need to do some error checking code. May need to fix.
+            //TODO: --Ensure API key is working.--
 
-            string apiKey = "OdhArLNV6xSN8BXcdbJ5mliZyqPZ7OMV"; //Had to get a new key.
+            string apiKey = "FvkQtaJunHbzw8sePEnJOIlAglqYrXjz"; //Had to get a new key.
             HttpClient request = new HttpClient();
             string cityKey = "";
             string uri;
